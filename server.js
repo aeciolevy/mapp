@@ -47,6 +47,13 @@ app.get("/", (req, res) => {
   res.render("text");
 });
 
+//Make the Google API key available to templates
+app.locals = {
+  gMapsApiKey: API_KEY
+};
+
+
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
