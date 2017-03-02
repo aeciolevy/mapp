@@ -31,14 +31,9 @@ app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
 
-//Make the Google API key available to templates
-app.locals = {
-  gMapsApiKey: API_KEY
-};
-
 //Define request-local variables
 app.use(function(req, res, next){
-  res.locals.apiQuery = '';
+  res.locals.apiQuery = '&callback=initMap';
   next();
 });
 
@@ -57,7 +52,7 @@ app.use("/maps", mapsRoutes);
 
 //Test routes
 app.get("/", (req, res) => {
-  res.render("text");
+  res.render("test");
 });
 
 //Make the Google API key available to templates
@@ -66,15 +61,15 @@ app.locals = {
 };
 
 
-
-app.get("/maps", (req, res) => {
-  res.render("maps_index");
-});
-
-app.get("/maps/map", (req, res) => {
-  res.locals.apiQuery = "&callback=initMap";
-  res.render("maps_show");
-});
+//
+// app.get("/maps", (req, res) => {
+//   res.render("maps_index");
+// });
+//
+// app.get("/maps/map", (req, res) => {
+//   res.locals.apiQuery = "&callback=initMap";
+//   res.render("maps_show");
+// });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

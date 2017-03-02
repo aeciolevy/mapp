@@ -3,6 +3,7 @@
 const express = require('express');
 const mapsRoutes = express.Router();
 
+
 module.exports = (DataHelpers) => {
 
   mapsRoutes.post("/map_id/locations", (req, res) => {
@@ -11,10 +12,10 @@ module.exports = (DataHelpers) => {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
-
-    locationTitle = req.body.locationTitle;
-    locationDesc = req.body.locationDesc;
-    locationImage = req.body.locationImage;
+    res.locals.apiQuery = "&callback=initMap";
+    const locationTitle = req.body.locationTitle;
+    const locationDesc = req.body.locationDesc;
+    const locationImage = req.body.locationImage;
 
 
   });

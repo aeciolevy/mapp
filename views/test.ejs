@@ -26,7 +26,7 @@
 
 <body>
   <div id="map" height="460px" width="100%"></div>
-  <div id="form">
+  <div id="infoBOX">
     <table>
       <tr>
         <td>
@@ -92,7 +92,7 @@
       });
 
       infowindow = new google.maps.InfoWindow({
-        content: document.getElementById('form')
+        content: document.getElementById('infoBOX')
       })
 
       messagewindow = new google.maps.InfoWindow({
@@ -163,7 +163,7 @@
 
     function doNothing() {}
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap">
+  <% include ./partials/_gmaps_api.ejs %>
   </script>
 
 </body>
