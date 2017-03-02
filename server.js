@@ -4,6 +4,7 @@ require('dotenv').config();
 
 const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
+const API_KEY     = process.env.GOOGLE_API;
 const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
@@ -29,6 +30,18 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
+
+//Make the Google API key available to templates
+app.locals = {
+  gMapsApiKey: API_KEY
+};
+
+//Define request-local variables
+app.use(function(req, res, next){
+  res.locals.apiQuery = '';
+  next();
+});
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
@@ -42,7 +55,7 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 app.use("/maps", mapsRoutes);
 
-// Home page
+//Test routes
 app.get("/", (req, res) => {
   res.render("text");
 });
@@ -53,6 +66,15 @@ app.locals = {
 };
 
 
+
+app.get("/maps", (req, res) => {
+  res.render("maps_index");
+});
+
+app.get("/maps/map", (req, res) => {
+  res.locals.apiQuery = "&callback=initMap";
+  res.render("maps_show");
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

@@ -1,15 +1,11 @@
 body {
   background-color: #eee;
+  font-family: $font-stack;
   padding-top: 4em;
 }
 
 body h1 {
   color: #244751;
-}
-
-main {
-  width: 800px;
-  margin: 0 auto;
 }
 
 .caption {
@@ -18,5 +14,5 @@ main {
 
 .map-thumbnail {
   height: 150px;
-  padding: 20px;
+  padding: 1vw;
 }
