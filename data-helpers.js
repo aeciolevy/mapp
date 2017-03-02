@@ -7,9 +7,9 @@ module.exports = function makeDataHelpers(db) {
       // GET MARKERS FOR SPECIFIC MAP
     },
 
-    saveLocation: function(markerInfo, callback){
-      db.locations.push(markerInfo);
-      console.log(markerInfo);
+    saveLocation: function(locationInfo, callback){
+      console.log(locationInfo);
+      db.locations.push(locationInfo);
       // INSERT INFORMATION INTO DB
       callback(null, true);
     },

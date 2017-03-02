@@ -17,17 +17,17 @@ module.exports = (DataHelpers) => {
         return;
       }
 
-      locationData = {
+      let locationData = {
         title: req.body.locationTitle,
         description: req.body.locationDesc,
-        image: locationImage,
+        image: req.body.locationImage,
         latitude: 49.2827,
         longitude: -123.1207,
         map_id: 5,
         user_id: 3
       }
       DataHelpers.saveLocation(locationData, (err) => {
-          if (err)
+          if (err) {
             res.status.json({
               error: err.message
             });

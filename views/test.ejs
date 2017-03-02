@@ -120,6 +120,10 @@
 
 
       console.log('DATA', title, description, imageURL, latlng.lat(), latlng.lng());
+
+      req.body.lat = latlng.lat();
+      req.body.lng = latlng.lng();
+
       // var url = 'phpsqlinfo_addrow.php?name=' + name + '&address=' + address +
       //   '&type=' + type + '&lat=' + latlng.lat() + '&lng=' + latlng.lng();
       //
