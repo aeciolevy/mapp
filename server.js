@@ -7,6 +7,7 @@ const ENV         = process.env.ENV || "development";
 const API_KEY     = process.env.GOOGLE_API;
 const express     = require("express");
 const bodyParser  = require("body-parser");
+const cookieSession = require("cookie-session");
 const sass        = require("node-sass-middleware");
 const app         = express();
 
@@ -40,6 +41,10 @@ app.use(function(req, res, next){
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET || 'mapp']
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -49,7 +54,7 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
+app.use("/users", usersRoutes(knex));
 
 //Test routes
 app.get("/", (req, res) => {
