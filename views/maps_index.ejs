@@ -2,46 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Latest compiled and minified CSS -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" integrity="sha384-gv0oNvwnqzF6ULI9TVsSmnULNb3zasNysvWwfT/s4l8k5I+g6oFz9dye0wg3rQ2Q" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
-<link rel="stylesheet" href="./styles/layout.css">
-<!-- Latest compiled and minified JavaScript -->
-<!-- Latest compiled and minified JavaScript -->
-
+  <% include ./partials/_head.ejs %>
 </head>
 <body>
   <header>
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <ul class="nav navbar-nav navbar-left">
-              <li class="navbar-brand"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>mapp</li>
-            </ul>
-
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Register</a></li>
-              <li><a href="#">Login</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <% include ./partials/_nav.ejs %>
   </header>
-  <main>
-    <ul class="nav nav-pills">
+  <main class="container">
+    <ul class="nav nav-pills nav-justified">
       <li role="presentation" class="active"><a data-toggle="tab" href="#mine">My mapps</a></li>
       <li role="presentation"><a data-toggle="tab" href="#favs">Favourites</a></li>
       <li role="presentation"><a data-toggle="tab" href="#contrib">Contributed</a></li>
@@ -103,10 +71,7 @@
 				</div>
 			</div>
   </main>
-  <script
-  src="https://code.jquery.com/jquery-3.1.1.min.js"
-  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-  crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <% include ./partials/_scripts.ejs %>
+  <% include ./partials/_gmaps_api.ejs %>
 </body>
 </html>
