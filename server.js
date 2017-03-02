@@ -28,6 +28,11 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET || 'mapp']
+}));
 
 //Make the Google API key available to templates
 app.locals = {
@@ -37,14 +42,10 @@ app.locals = {
 //Define request-local variables
 app.use(function(req, res, next){
   res.locals.apiQuery = '';
+  res.locals.user_id = req.session.user_id;
   next();
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieSession({
-  name: 'session',
-  keys: [process.env.SESSION_SECRET || 'mapp']
-}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -62,6 +63,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/maps", (req, res) => {
+  console.log(req.session.user_id);
   res.render("maps_index");
 });
 

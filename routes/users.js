@@ -18,6 +18,7 @@ module.exports = (knex) => {
   router.get("/:user_id/login", (req, res) => {
     if (req.params.user_id === "0") {
       req.session = null;
+      res.redirect("/maps");
     } else {
       knex.select("id")
           .from("users")
