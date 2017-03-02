@@ -33,7 +33,7 @@ app.set("view engine", "ejs");
 
 //Define request-local variables
 app.use(function(req, res, next){
-  res.locals.apiQuery = '&callback=initMap';
+  res.locals.apiQuery = '';
   next();
 });
 
@@ -52,6 +52,7 @@ app.use("/maps", mapsRoutes);
 
 //Test routes
 app.get("/", (req, res) => {
+  res.locals.apiQuery = "&callback=initMap";
   res.render("test");
 });
 
