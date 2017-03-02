@@ -17,6 +17,8 @@ const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
+const mapsRoutes = require("./routes/maps");
+const locationRoutes = require("./routes/location");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -29,13 +31,14 @@ app.use(knexLogger(knex));
 app.set("view engine", "ejs");
 
 //Make the Google API key available to templates
-app.locals = {
-  gMapsApiKey: API_KEY
-};
+// app.locals = {
+//   gMapsApiKey: API_KEY
+// };
 
 //Define request-local variables
 app.use(function(req, res, next){
   res.locals.apiQuery = '';
+  res.locals.gMapsApiKey = API_KEY;
   next();
 });
 
@@ -47,23 +50,26 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+const initialDb = require("./db/initialDb");
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
+app.use("/users", usersRoutes(knex));
+app.use("/maps", mapsRoutes(initialDb));
+app.use("/location", locationRoutes(knex));
 
 //Test routes
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/maps", (req, res) => {
-  res.render("maps_index");
-});
+// app.get("/maps", (req, res) => {
+//   res.render("maps_index");
+// });
 
-app.get("/maps/map", (req, res) => {
-  res.locals.apiQuery = "&callback=initMap";
-  res.render("maps_show");
-});
+// app.get("/maps/map", (req, res) => {
+//   res.locals.apiQuery = "&callback=initMap";
+//   res.render("maps_show");
+// });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
