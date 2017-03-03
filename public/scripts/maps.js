@@ -55,9 +55,9 @@ function initMap() {
     content: document.getElementById('infoBox')
   });
 
-  messagewindow = new google.maps.InfoWindow({
-    content: document.getElementById('message')
-  });
+  // messagewindow = new google.maps.InfoWindow({
+  //   content: document.getElementById('message')
+  // });
 
   google.maps.event.addListener(map, 'click', function(event) {
     marker = new google.maps.Marker({
