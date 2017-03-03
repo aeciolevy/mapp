@@ -2,7 +2,32 @@
   height: 100%;
 }
 
-#infoBOX {
-  height: 300px;
-  width: 300px;
+#infoBox {
+  height: 220px;
+  width: 250px;
+  // padding: 5px;
+
+
+}
+
+.locationTitle{
+  width: 240px;
+  margin-bottom: 10px;
+  padding: 2px;
+}
+
+.locationDesc{
+  height: 80px;
+  width: 240px;
+  margin-bottom: 10px;
+  padding: 2px;
+
+}
+
+
+.locationImage{
+  width: 240px;
+  margin-bottom: 10px;
+  padding: 2px;
+
 }
