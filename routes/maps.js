@@ -71,7 +71,7 @@ module.exports = (queries) => {
       longitude: 'ONGITDUDE',
       map_id: 5,
       user_id: 3
-    }
+    };
 
     // DataHelpers.saveLocation(locationData, (err) => {
     //   if (err) {

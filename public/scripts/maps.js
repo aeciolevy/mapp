@@ -29,6 +29,7 @@ function saveLocation(lat, lng) {
     }).fail(function(xhr, err) {
       console.log(err);
       alert('LAME');
+
     });
 
   });
@@ -66,9 +67,7 @@ function initMap() {
     });
 
 
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map, marker);
-    });
+    infowindow.open(map, marker);
     saveLat = marker.getPosition().lat();
     saveLng = marker.getPosition().lng();
     saveLocation(saveLat, saveLng);
