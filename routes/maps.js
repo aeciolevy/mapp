@@ -99,7 +99,7 @@ module.exports = (knex) => {
       longitude: 'ONGITDUDE',
       map_id: 5,
       user_id: 3
-    }
+    };
 
     // DataHelpers.saveLocation(locationData, (err) => {
     //   if (err) {
@@ -114,8 +114,15 @@ module.exports = (knex) => {
 
   });
 
+<<<<<<< HEAD
   router.get("/:map_id", (req, res) => {
     res.locals.apiQuery = "&callback=initMap";
+=======
+
+  //Temporary to test the map
+  router.get("/map", (req, res) => {
+    res.locals.apiQuery = "&libraries=places&callback=initMap";
+>>>>>>> features/searchbar
     res.render("maps_show");
   });
 
