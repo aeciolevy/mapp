@@ -1,31 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <% include ./partials/_head.ejs %>
+
+<head>
+  <% include ./partials/_head.ejs %>
     <title>Simple Map</title>
 
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
+
       #map {
         height: 100%;
       }
       /* Optional: Makes the sample page fill the window. */
-      html, body {
+
+      html,
+      body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
     </style>
-  </head>
-  <body>
-    <header>
-      <% include ./partials/_nav.ejs %>
-    </header>
-    <div id="map"></div>
+</head>
+
+<body>
+  <header>
+    <% include ./partials/_nav.ejs %>
+  </header>
+  <div id="map" width="100%"></div>
+  <div id="infoBOX">
+    <table>
+      <tr>
+        <td>
+          <form id="infoForm" method="POST" action="/maps/map_id/locations">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="locationTitle" name="locationTitle" placeholder="Title" type="text">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <textarea class="locationDesc" name="locationDesc" placeholder="Description Textarea"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input class="locationImage" name="locationImage" placeholder="Image URL" type="text">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button id='save'>Save</button>
+        </td>
+      </tr>
+      </form>
+    </table>
+
+  </div>
+  <div id="message">Location saved</div>
 
 
-    <script>
+  <script>
     let map;
     let marker;
     let infowindow;
@@ -69,7 +106,8 @@
 
       });
     }
-    </script>
-    <% include ./partials/_gmaps_api.ejs %>
-  </body>
+  </script>
+  <% include ./partials/_gmaps_api.ejs %>
+</body>
+
 </html>
