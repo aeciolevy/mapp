@@ -1,22 +1,16 @@
 "use strict";
 
-module.exports = function makeDataHelpers(knex) {
-  return {
+function getLocations (mapID, callback) {
+  // GET MARKERS FOR SPECIFIC MAP
+}
 
-    getLocations: (mapID, callback) => {
-      // GET MARKERS FOR SPECIFIC MAP
-    },
+function saveLocation(locationInfo, callback) {
+  console.log(locationInfo);
+  // db.locations.push(locationInfo);
+  // INSERT INFORMATION INTO DB
+  callback(null, true);
+}
 
-    saveLocation: function(locationInfo, callback){
-      console.log(locationInfo);
-      // db.locations.push(locationInfo);
-      // INSERT INFORMATION INTO DB
-      callback(null, true);
-    },
-
-    deleteMarker: (markerID, callback) => {
-      // DELETE MARKER
-    }
-
-  };
-};
+function deleteMarker (markerID, callback) {
+  // DELETE MARKER
+}
