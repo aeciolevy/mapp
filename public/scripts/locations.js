@@ -48,7 +48,7 @@ $( () => {
 
     const $form = $(this).closest('form');
     const $title = $form.find('.locationTitle').val();
-    const $desc = $form.find('.locationDesc').val();
+    const $desc = $form.find('.locationDlesc').val();
     const $image = $form.find('.locationDesc').val();
 
     $.ajax({
