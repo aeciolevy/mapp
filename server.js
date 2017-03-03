@@ -62,15 +62,15 @@ app.locals = {
 };
 
 
-//
-// app.get("/maps", (req, res) => {
-//   res.render("maps_index");
-// });
-//
-// app.get("/maps/map", (req, res) => {
-//   res.locals.apiQuery = "&callback=initMap";
-//   res.render("maps_show");
-// });
+
+app.get("/maps", (req, res) => {
+  res.render("maps_index");
+});
+
+app.get("/maps/map", (req, res) => {
+  res.locals.apiQuery = "&callback=initMap";
+  res.render("maps_show");
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
