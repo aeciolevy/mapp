@@ -55,7 +55,7 @@ module.exports = (knex) => {
       if (req.session.user_id) {
         res.render('./maps/index', {
           maps: maps,
-          mapsLists: mapsLists,
+          mapLists: mapLists,
           currentList: currentList
         });
       } else {
