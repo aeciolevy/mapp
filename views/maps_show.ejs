@@ -1,38 +1,40 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html>
 
 <head>
-  <% include ./partials/_head.ejs %>
-    <title>Simple Map</title>
-
-    <style>
-      /* Always set the map height explicitly to define the size of the div
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>From Info Windows to a Database: Saving User-Added Form Data</title>
+  <style>
+    /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
 
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
+    #map {
+      height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
 
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <% include ./partials/_head.ejs %>
 </head>
 
 <body>
   <header>
     <% include ./partials/_nav.ejs %>
   </header>
-  <div id="map" width="100%"></div>
+
+  <div id="map" height="460px" width="100%"></div>
   <div id="infoBOX">
     <table>
       <tr>
         <td>
-          <form id="infoForm" method="POST" action="/maps/map_id/location">
+          <form id="infoForm" method="POST" action="/maps/map_id/locations">
         </td>
       </tr>
       <tr>
@@ -42,7 +44,7 @@
       </tr>
       <tr>
         <td>
-          <textarea class="locationDesc" name="locationDesc" placeholder="Description Textarea"></textarea>
+          <textarea class="locationDesc"name="locationDesc" placeholder="Description Textarea"></textarea>
         </td>
       </tr>
       <tr>
@@ -60,55 +62,9 @@
 
   </div>
   <div id="message">Location saved</div>
+    <% include ./partials/_scripts.ejs %>
+    <% include ./partials/_gmaps_api.ejs %>
 
-
-  <script>
-    let map;
-    let marker;
-    let infowindow;
-    let messagewindow;
-    let long = 0;
-    let lats = 0;
-
-    function initMap() {
-      let california = {
-        lat: 37.4419,
-        lng: -122.1419
-      };
-
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: california,
-        zoom: 13
-      });
-
-      infowindow = new google.maps.InfoWindow({
-        content: document.getElementById('infoBOX')
-      });
-
-      messagewindow = new google.maps.InfoWindow({
-        content: document.getElementById('message')
-      });
-
-      google.maps.event.addListener(map, 'click', function(event) {
-        marker = new google.maps.Marker({
-          position: event.latLng,
-          map: map
-        });
-
-        console.log(marker.position);
-
-
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map, marker);
-        });
-
-        console.log(marker.getPosition().lat(), marker.getPosition().lng());
-
-      });
-    }
-  </script>
-  <% include ./partials/_gmaps_api.ejs %>
-  <% include ./partials/_scripts.ejs %>
 </body>
 
 </html>
