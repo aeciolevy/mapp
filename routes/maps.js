@@ -7,7 +7,7 @@ module.exports = (knex) => {
 
   // GET METHODS
 
-  const mapLists = [
+  const mapsLists = [
     {name: "My Mapps", query: "user"},
     {name: "Favorites", query: "favs"},
     {name: "Contributed", query: "contrib"},
@@ -55,7 +55,7 @@ module.exports = (knex) => {
       if (req.session.user_id) {
         res.render('./maps/index', {
           maps: maps,
-          mapLists: mapLists,
+          mapsLists: mapsLists,
           currentList: currentList
         });
       } else {
