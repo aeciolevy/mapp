@@ -114,8 +114,7 @@ module.exports = (knex) => {
 
   });
 
-  //Temporary to test the map
-  router.get("/map", (req, res) => {
+  router.get("/:map_id", (req, res) => {
     res.locals.apiQuery = "&callback=initMap";
     res.render("maps_show");
   });
