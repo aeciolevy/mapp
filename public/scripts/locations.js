@@ -2,9 +2,11 @@
   let marker;
   let infowindow;
   let messagewindow;
+  let long = 0;
+  let lats = 0;
 
   function initMap() {
-    var california = {
+    let california = {
       lat: 37.4419,
       lng: -122.1419
     };
@@ -16,7 +18,7 @@
 
     infowindow = new google.maps.InfoWindow({
       content: document.getElementById('infoBOX')
-    })
+    });
 
     messagewindow = new google.maps.InfoWindow({
       content: document.getElementById('message')
@@ -35,23 +37,33 @@
         infowindow.open(map, marker);
       });
 
-      console.log(marker.getPosition().lat(), marker.getPosition().lng())
+      console.log(marker.getPosition().lat(), marker.getPosition().lng());
+
     });
   }
+  $( () => {
+    $('#infoBOX').on('click', '#save', function(event) {
+      console.log('CLICKEDDDD');
+      event.preventDefault();
+
+      const $form = $(this).closest('form');
+      const $title = $form.find('.locationTitle').val();
+      const $desc = $form.find('.locationDesc').val();
+      const $image = $form.find('.locationDesc').val();
+
+      $.ajax({
+        method: 'POST',
+        url: 'http://locationData:8080/maps/map_id/locations',
+        data: $form.serialize()
+      }).then((data) => {
+        alert('TESTING');
+        console.log('DATAAAAAAA', data);
+      }).fail(function(xhr, err) {
+        console.log(err);
+        alert('LAME');
+      });
 
 
 
-  // function saveCoords() {
-  //   const latlng = marker.getPosition();
-  //
-  //   req.body.lat = latlng.lat();
-  //   req.body.lng = latlng.lng();
-  //
-  //   console.log('TESTESTSETESTSET::::::::',req.body);
-  //
-  // }
-  //   request.open('GET', url, true);
-  //   request.send(null);
-  // }
-
-  function doNothing() {}
+    });
+  });

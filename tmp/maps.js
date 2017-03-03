@@ -18,23 +18,23 @@ module.exports = (DataHelpers) => {
         return;
       }
 
+        let locationData = {
+          title: req.body.locationTitle,
+          description: req.body.locationDesc,
+          image: req.body.locationImage,
+          latitude: 'ATTITUDE',
+          longitude: 'ONGITDUDE',
+          map_id: 5,
+          user_id: 3
+        }
 
-      let locationData = {
-        title: req.body.locationTitle,
-        description: req.body.locationDesc,
-        image: req.body.locationImage,
-        latitude: req.body.lat,
-        longitude: req.body.lng,
-        map_id: 5,
-        user_id: 3
-      }
       DataHelpers.saveLocation(locationData, (err) => {
           if (err) {
-            res.status.json({
+            res.status(500).json({
               error: err.message
             });
-        } else {
-          res.status(201).send();
+          } else {
+          res.status(201).send('SUCCESS');
         }
       });
 

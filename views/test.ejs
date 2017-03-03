@@ -30,27 +30,27 @@
     <table>
       <tr>
         <td>
-          <form method="POST" action="/maps/map_id/locations">
+          <form id="infoForm" method="POST" action="/maps/map_id/locations">
         </td>
       </tr>
       <tr>
         <td>
-          <input name="locationTitle" placeholder="Title" type="text">
+          <input class="locationTitle" name="locationTitle" placeholder="Title" type="text">
         </td>
       </tr>
       <tr>
         <td>
-          <textarea name="locationDesc" placeholder="Description Textarea"></textarea>
+          <textarea class="locationDesc"name="locationDesc" placeholder="Description Textarea"></textarea>
         </td>
       </tr>
       <tr>
         <td>
-          <input name="locationImage" placeholder="Image URL" type="text">
+          <input class="locationImage" name="locationImage" placeholder="Image URL" type="text">
         </td>
       </tr>
       <tr>
         <td>
-          <button onclick='saveCoords()'>Save</button>
+          <button id='save'>Save</button>
         </td>
       </tr>
       </form>
