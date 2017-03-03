@@ -15,8 +15,8 @@ module.exports = (knex) => {
   ];
   //GEt METHOD FOR /MAPS
   router.get('/', (req, res) => {
-    let currentList = 'all';
-    let perPage = 10;
+    let currentList = 'All';
+    let perPage = 12;
     let selectMaps = knex
       .select('*')
       .from('maps');
