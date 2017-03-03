@@ -3,39 +3,67 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (queries) => {
+module.exports = (knex) => {
 
   // GET METHODS
 
-  //Show All Maps
-  router.get("/", (req, res) => {
-    res.render("maps_index");
-  });
-  router.get("/all", (req, res) => {
-    console.log(queries.getMaps);
-    queries.getMaps((data) => {
-      res.json(data);
-    });
-  });
-  //Show one particular Map
-  router.get("/id/:map_id", (req, res) => {
-    knex
+  const mapLists = [
+    {name: "My Mapps", query: "user"},
+    {name: "Favorites", query: "favs"},
+    {name: "Contributed", query: "contrib"},
+    {name: "All", query: "all"}
+  ];
+  //GEt METHOD FOR /MAPS
+  router.get('/', (req, res) => {
+    let currentList = 'all';
+    let perPage = 10;
+    let selectMaps = knex
+      .select('*')
+      .from('maps');
+    //Query for user maps
+    if (req.query.show === 'user') {
+      currentList = 'My Mapps';
+      selectMaps = knex
       .select('*')
       .from('maps')
       .where({
-        id: req.params.map_id
-      })
-      .then((data) => {
-        res.json(data);
+        user_id: req.session.user_id
       });
-  });
-  //Show favorite Maps
-  router.get("/favorite", (req, res) => {
-    res.send("Favorite Maps");
-  });
-  //Show Contributed Maps
-  router.get("/contributed", (req, res) => {
-    res.send("Contributed Maps");
+    }
+    //Query for user favorite maps
+    if (req.query.show === 'favs') {
+      selectMaps = knex('favorites')
+      .select('maps.id', 'maps.title')
+      .join('maps', {'favorites.map_id': 'maps.id'})
+      .where({
+        'favorites.user_id': req.session.user_id
+      });
+      currentList = 'Favorites';
+    }
+    //Query for maps who user contributed for
+    if (req.query.show === 'contrib') {
+      selectMaps = knex('maps')
+      .distinct('maps.id', 'maps.title', 'maps.user_id')
+      .join('locations', {'locations.map_id': 'maps.id'})
+      .where({
+        'locations.user_id': req.session.user_id
+      });
+      currentList = 'Contributed';
+    }
+    //Promisse
+    selectMaps.then(maps => {
+      if (req.session.user_id) {
+        res.render('./maps/index', {
+          maps: maps,
+          mapsLists: mapsLists,
+          currentList: currentList
+        });
+      } else {
+        res.render('./maps/public', {
+          maps: maps
+        });
+      }
+    });
   });
 
   //POST METHODS
@@ -85,7 +113,6 @@ module.exports = (queries) => {
 
 
   });
-
 
   //Temporary to test the map
   router.get("/map", (req, res) => {
