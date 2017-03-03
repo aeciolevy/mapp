@@ -4,15 +4,13 @@ body {
   padding-top: 4em;
 }
 
-body h1 {
-  color: #244751;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-.caption {
-  height: 6em;
-}
-
-.map-thumbnail {
-  height: 150px;
-  padding: 1vw;
+.row {
+  @include xs-only {
+    margin: 0 auto;
+    width: 75%;
+  }
 }

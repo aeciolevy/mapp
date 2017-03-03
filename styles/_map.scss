@@ -3,24 +3,23 @@
 
   &-tab {
 
-    &-a {
-
+    & &-a {
+      font-size: 1.75em;
+      padding: $space;
     }
+
   }
 
   &-tabs {
-
+    height: auto;
+    padding: $space 0;
   }
 
   &-thumbnail {
-    &-a {
 
-    }
-    &-img {
-
-    }
     &-name {
-
+      font-size: 1.75em;
+      height: 3em;
     }
   }
 

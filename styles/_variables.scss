@@ -1,1 +1,12 @@
+//Variables
+
 $font-stack: 'Quicksand', sans-serif;
+$space: 1em;
+$xs-width: 768px;
+
+//Mixins
+@mixin xs-only {
+  @media (max-width: #{$xs-width}) {
+    @content;
+  }
+}
