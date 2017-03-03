@@ -1,6 +1,3 @@
-var long = 0;
-var lats = 0;
-
 function saveLocation(lat, lng) {
   $('#infoForm').submit(function(event) {
     event.preventDefault();
