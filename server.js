@@ -30,6 +30,11 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SESSION_SECRET || 'mapp']
+}));
 
 //Make the Google API key available to templates
 // app.locals = {
@@ -40,14 +45,10 @@ app.set("view engine", "ejs");
 app.use(function(req, res, next){
   res.locals.apiQuery = '';
   res.locals.gMapsApiKey = API_KEY;
+  res.locals.user_id = req.session.user_id;
   next();
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieSession({
-  name: 'session',
-  keys: [process.env.SESSION_SECRET || 'mapp']
-}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -68,14 +69,6 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// app.get("/maps", (req, res) => {
-//   res.render("maps_index");
-// });
-
-// app.get("/maps/map", (req, res) => {
-//   res.locals.apiQuery = "&callback=initMap";
-//   res.render("maps_show");
-// });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

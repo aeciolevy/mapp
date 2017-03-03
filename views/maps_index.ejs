@@ -9,66 +9,16 @@
     <% include ./partials/_nav.ejs %>
   </header>
   <main class="container">
-    <ul class="nav nav-pills nav-justified">
-      <li role="presentation" class="active"><a data-toggle="tab" href="#mine">My mapps</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#favs">Favourites</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#contrib">Contributed</a></li>
-      <li role="presentation"><a data-toggle="tab" href="#all">All</a></li>
-    </ul>
+    <% if (user_id) { %>
+    <% include ./partials/_tabs.ejs %>
+    <% } %>
     <div class="tab-content clearfix">
-			  <div class="tab-pane active" id="mine">
-          <div class="row">
-            <div class="col-lg-3 col-md-4 col-xs-6">
-              <a href="#" class="thumbnail">
-                <img src="http://fillmurray.com/800/800" alt="...">
-                <div class="caption">
-                  <p>My favourite coffee shops in washingston state jhre euwqo</p>
-                </div>
-              </a>
-            </div>
-              <div class="col-lg-3 col-md-4 col-xs-6">
-                <a href="#" class="thumbnail">
-                  <img src="http://fillmurray.com/800/800" alt="...">
-                  <div class="caption">
-                    <p>Coffee</p>
-                  </div>
-                </a>
-              </div>
-              <div class="col-lg-3 col-md-4 col-xs-6">
-                <a href="#" class="thumbnail">
-                  <img src="http://fillmurray.com/800/800" alt="...">
-                  <div class="caption">
-                    <p></p>
-                  </div>
-                </a>
-              </div>
-              <div class="col-lg-3 col-md-4 col-xs-6">
-                <a href="#" class="thumbnail">
-                  <img src="http://fillmurray.com/800/800" alt="...">
-                  <div class="caption">
-                    <p>Co;lkzdk;ljfads;kl sdkjd kde</p>
-                  </div>
-                </a>
-              </div>
-              <div class="col-lg-3 col-md-4 col-xs-6">
-                <a href="#" class="thumbnail">
-                  <img src="http://fillmurray.com/800/800" alt="...">
-                  <div class="caption">
-                    <p>asdl.kjhsdlkfnasbdfnk sdajmfsndmkjsfd ajjns</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-				</div>
-				<div class="tab-pane" id="favs">
-          <h3>Test 1</h3>
-				</div>
-        <div class="tab-pane" id="contrib">
-          <h3>test2</h3>
-				</div>
-          <div class="tab-pane" id="all">
+          <div class="tab-pane<%= !user_id ? ' active' : '' %>" id="all" >
           <h3>test 3</h3>
 				</div>
+        <% if (user_id) { %>
+          <% include ./partials/_tabs_content.ejs %>
+          <% } %>
 			</div>
   </main>
   <% include ./partials/_scripts.ejs %>
