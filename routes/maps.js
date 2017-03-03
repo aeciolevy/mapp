@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 module.exports = (queries) => {
 
@@ -20,14 +20,14 @@ module.exports = (queries) => {
   //Show one particular Map
   router.get("/id/:map_id", (req, res) => {
     knex
-    .select('*')
-    .from('maps')
-    .where({
-      id: req.params.map_id
-    })
-    .then((data) => {
-      res.json(data);
-    });
+      .select('*')
+      .from('maps')
+      .where({
+        id: req.params.map_id
+      })
+      .then((data) => {
+        res.json(data);
+      });
   });
   //Show favorite Maps
   router.get("/favorite", (req, res) => {
@@ -53,8 +53,37 @@ module.exports = (queries) => {
     // res.render("maps_index");
   });
   //Add Location
-  router.post("/:map_id/location", (req, res) => {
-    // res.render("maps_index");
+  router.post("/map_id/location", (req, res) => {
+    console.log('BODYY:::', req.body);
+    res.locals.apiQuery = "&callback=initMap";
+    if (!req.body.locationTitle) {
+      res.status(400).json({
+        error: 'invalid request: no data in POST body'
+      });
+      return;
+    }
+
+    let locationData = {
+      title: req.body.locationTitle,
+      description: req.body.locationDesc,
+      image: req.body.locationImage,
+      latitude: 'ATTITUDE',
+      longitude: 'ONGITDUDE',
+      map_id: 5,
+      user_id: 3
+    }
+
+    // DataHelpers.saveLocation(locationData, (err) => {
+    //   if (err) {
+    //     res.status(500).json({
+    //       error: err.message
+    //     });
+    //   } else {
+    //     res.status(201).send('SUCCESS');
+    //   }
+    // });
+
+
   });
 
 

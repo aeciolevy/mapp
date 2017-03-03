@@ -29,8 +29,9 @@ function initMap() {
       position: event.latLng,
       map: map
     });
-
-    console.log(marker.position);
+    $('#save').on('click', (event) => {
+      console.log('test');
+    });
 
 
     google.maps.event.addListener(marker, 'click', function() {
@@ -41,29 +42,3 @@ function initMap() {
 
   });
 }
-$( () => {
-  $('#infoBOX').on('click', '#save', function(event) {
-    console.log('CLICKEDDDD');
-    event.preventDefault();
-
-    const $form = $(this).closest('form');
-    const $title = $form.find('.locationTitle').val();
-    const $desc = $form.find('.locationDesc').val();
-    const $image = $form.find('.locationDesc').val();
-
-    $.ajax({
-      method: 'POST',
-      url: 'http://locationData:8080/maps/map_id/locations',
-      data: $form.serialize()
-    }).then((data) => {
-      alert('TESTING');
-      console.log('DATAAAAAAA', data);
-    }).fail(function(xhr, err) {
-      console.log(err);
-      alert('LAME');
-    });
-
-
-
-  });
-});
