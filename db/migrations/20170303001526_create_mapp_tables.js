@@ -37,7 +37,7 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable("favorites"),
 
     knex.schema.table("users", (table) => {
-      table.dropColumn('e-mail');
+      table.dropColumn('email');
     })
   ]);
 };
