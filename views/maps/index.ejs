@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/_head.ejs %>
+</head>
+<body>
+  <header>
+    <% include ../partials/_nav.ejs %>
+  </header>
+  <main class="container map-thumbnails">
+    <ul class="nav nav-pills nav-justified map-tabs">
+      <% mapLists.forEach(mapList => { %>
+        <li class="map-tab <%= mapList.name === currentList ? 'active' : '' %>">
+          <a class="map-tab-a" href="/maps?show=<%= mapList.query %>"><%= mapList.name %></a>
+        </li>
+      <% }) %>
+    </ul>
+    <div class="row">
+    <% maps.forEach(map => { %>
+      <div class="map-thumbnail col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <a class="thumbnail" href="maps/<%= map.id %>">
+          <img alt="<%= map.title %>" src="http://fillmurray.com/640/640">
+          <h1 class="caption map-thumbnail-name"><%= map.title %></h1>
+        </a>
+      </div>
+    <% }) %>
+  </div>
+  </main>
+  <% include ../partials/_scripts.ejs %>
+  <% include ../partials/_gmaps_api.ejs %>
+</body>
+</html>

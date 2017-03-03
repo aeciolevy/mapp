@@ -1,5 +1,32 @@
 #map {
   height: 100%;
+
+  &-tab {
+
+    & &-a {
+      font-size: 1.75em;
+      padding: $space;
+    }
+
+  }
+
+  &-tabs {
+    height: auto;
+    padding: $space 0;
+  }
+
+  &-thumbnail {
+
+    &-name {
+      font-size: 1.75em;
+      height: 3em;
+    }
+  }
+
+  &-thumbnails {
+
+  }
+
 }
 
 #infoBox {
