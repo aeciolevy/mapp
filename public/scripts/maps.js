@@ -41,12 +41,14 @@ function initMap() {
     $('#infoForm').submit( function(event) {
       event.preventDefault();
       console.log(this);
-      alert('NEW?');
+      alert('lng?');
 
       const $form = $(this).closest('form');
       const $title = $form.find('.locationTitle').val();
       const $desc = $form.find('.locationDesc').val();
       const $image = $form.find('.locationImage').val();
+
+      console.log('lat: ', marker.getPosition().lat(), 'lng: ', marker.getPosition().lng());
 
       let testing = $('.locationTitle, .locationDesc, .locationImage').serialize();
       console.log(testing);
@@ -54,7 +56,12 @@ function initMap() {
       $.ajax({
         method: 'POST',
         url: 'http://localhost:8080/maps/map_id/location',
-        data: $form.serialize()
+        data: {
+          title: $title,
+          description: $desc
+          // TODO image??
+          // latitud
+        }
 
       }).then((data) => {
 
