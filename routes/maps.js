@@ -89,7 +89,7 @@ module.exports = (queries) => {
 
   //Temporary to test the map
   router.get("/map", (req, res) => {
-    res.locals.apiQuery = "&callback=initMap";
+    res.locals.apiQuery = "&libraries=places&callback=initMap";
     res.render("maps_show");
   });
 
