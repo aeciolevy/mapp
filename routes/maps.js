@@ -3,7 +3,7 @@
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (knex) => {
+module.exports = (queries) => {
 
   // GET METHODS
 
@@ -11,14 +11,23 @@ module.exports = (knex) => {
   router.get("/", (req, res) => {
     res.render("maps_index");
   });
+  router.get("/all", (req, res) => {
+    console.log(queries.getMaps);
+    queries.getMaps((data) => {
+      res.json(data);
+    });
+  });
   //Show one particular Map
   router.get("/id/:map_id", (req, res) => {
-    console.log("id:", req.params.map_id);
-    if (req.params.map_id === '1' || req.params.map_id === '2' || req.params.map_id === '3'){
-      res.json(knex);
-    } else {
-      res.status(401).send("Wrong Id");
-    }
+    knex
+    .select('*')
+    .from('maps')
+    .where({
+      id: req.params.map_id
+    })
+    .then((data) => {
+      res.json(data);
+    });
   });
   //Show favorite Maps
   router.get("/favorite", (req, res) => {
