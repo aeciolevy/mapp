@@ -9,6 +9,13 @@ module.exports = (knex) => {
   router.get('/', (req, res) => {
     let getLocations = knex('locations')
     .select('*');
+    if (req.query.show === 'maps'){
+      getLocations = knex('locations')
+      .select('*')
+      .where({
+        map_id: req.query.mapId
+      });
+    }
     getLocations.then(data => {
       res.json(data);
     });
@@ -18,8 +25,9 @@ module.exports = (knex) => {
     let getOneLocation = knex('locations')
     .select('*')
     .where({
-      map_id: req.params.id
+      id: req.params.id
     });
+    console.log(req.query);
     getOneLocation.then(data => {
       res.json(data);
     });
@@ -36,7 +44,6 @@ module.exports = (knex) => {
       map_id: req.params.id,
       user_id: req.session.user_id })
       .then((rows) => {
-        console.log(rows);
       });
     // knex.insert({
     //   title: req.body.title,

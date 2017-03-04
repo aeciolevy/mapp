@@ -57,7 +57,7 @@
     };
     let $map = $('#map');
     let $data = $map.data();
-    $.getJSON(`/locations/${$data.mapid}`).then(addMarkerCenterMap);
+    $.getJSON(`/locations/?show=maps&mapId=${$data.mapid}`).then(addMarkerCenterMap);
   });
 })();
 
