@@ -33,7 +33,7 @@
 }
 
 #infoBox {
-  height: 220px;
+  height: 230px;
   width: 250px;
   // padding: 5px;
 
@@ -41,14 +41,14 @@
 }
 
 .locationTitle{
-  width: 240px;
+  width: 100%;
   margin-bottom: 10px;
   padding: 2px;
 }
 
 .locationDesc{
   height: 80px;
-  width: 240px;
+  width: 100%;
   margin-bottom: 10px;
   padding: 2px;
 
@@ -60,6 +60,10 @@
   margin-bottom: 10px;
   padding: 2px;
 
+}
+
+#save {
+  float: right;
 }
 
 #description {
