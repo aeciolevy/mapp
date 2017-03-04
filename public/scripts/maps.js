@@ -3,14 +3,8 @@
   var currentMap;
 
   window.initMap = function initMap() {
-
-    // let california = {
-    //   lat: 37.4419,
-    //   lng: -122.1419
-    // };
     var map = new google.maps.Map(document.getElementById('map'), {
     });
-
     currentMap = map;
     let infowindow = new google.maps.InfoWindow({
       content: document.getElementById('infoBox')
@@ -28,7 +22,6 @@
   };
 
   $(function(){
-    //
     $('#infoForm').submit(function(event) {
       event.preventDefault();
       const $form = $(this);
@@ -60,13 +53,9 @@
       }
       currentMap.fitBounds(newBoundary);
     };
-
-    $.getJSON("/locations/").then(function(data){
-      addMarkerCenterMap(data);
-    });
-
+    let $map = $('#map');
+    let $data = $map.data();
+    $.getJSON(`/locations/${$data.mapid}`).then(addMarkerCenterMap);
   });
-
-
 })();
 

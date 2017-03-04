@@ -18,7 +18,7 @@ module.exports = (knex) => {
     let getOneLocation = knex('locations')
     .select('*')
     .where({
-      id: req.params.id
+      map_id: req.params.id
     });
     getOneLocation.then(data => {
       res.json(data);

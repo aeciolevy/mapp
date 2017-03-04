@@ -22,7 +22,7 @@
     <% include ./partials/_nav.ejs %>
   </header>
 
-  <div id="map"></div>
+  <div id="map" data-mapId="<%= mapId %>"></div>
   <div id="infoBox">
     <table>
       <tr>
@@ -62,7 +62,7 @@
   <div id="message">Location saved</div>
     <% include ./partials/_scripts.ejs %>
     <% include ./partials/_gmaps_api.ejs %>
-
+<script src="/scripts/maps.js"></script>
 </body>
 
 </html>
