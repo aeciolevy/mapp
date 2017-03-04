@@ -84,10 +84,19 @@ module.exports = (knex) => {
   router.post("/:map_id/favorite", (req, res) => {
     res.status(201).send("map favourited");
   });
+
   //Add a Map
   router.post("/", (req, res) => {
-    // res.render("maps_index");
+    knex('maps')
+     .insert({
+       title: req.body.title,
+       user_id: req.session.user_id })
+       .returning('id')
+       .then((id) => {
+         res.redirect(`/maps/${id}`);
+       });
   });
+
   //Delete a Map
   router.post("/delete", (req, res) => {
     // res.render("maps_index");
