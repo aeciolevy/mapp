@@ -55,14 +55,16 @@ module.exports = (queries) => {
   //Add Location
   router.post("/map_id/location", (req, res) => {
     console.log('BODYY:::', req.body);
+
     res.locals.apiQuery = "&callback=initMap";
+
     if (!req.body.locationTitle) {
       res.status(400).json({
         error: 'invalid request: no data in POST body'
       });
       return;
     }
-
+    alert('stestset');
     let locationData = {
       title: req.body.locationTitle,
       description: req.body.locationDesc,
@@ -72,6 +74,8 @@ module.exports = (queries) => {
       map_id: 5,
       user_id: 3
     };
+
+    res.redirect('/map', locationData);
 
     // DataHelpers.saveLocation(locationData, (err) => {
     //   if (err) {
