@@ -17,11 +17,11 @@
   </style>
   <% include ./partials/_head.ejs %>
 </head>
+
 <body>
   <header>
     <% include ./partials/_nav.ejs %>
   </header>
-
   <div class="pac-card" id="pac-card">
     <div>
       <div id="title">
@@ -48,50 +48,53 @@
     <div id="pac-container">
       <input id="pac-input" type="text" placeholder="Enter a location">
     </div>
-  </div>
+    </div>
 
 
-  <div id="map"></div>
-  <div id="infoBox">
-    <table>
-      <tr>
-        <td>
-          <h4>Save a location</h4>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <form id="infoForm" method="POST" action="/maps/map_id/location">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input class="locationTitle" name="locationTitle" placeholder="Title" type="text">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <textarea class="locationDesc" name="locationDesc" placeholder="Description Textarea"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input class="locationImage" name="locationImage" placeholder="Image URL" type="text">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <button id='save'>Save</button>
-        </td>
-      </tr>
-      </form>
-    </table>
+    <div id="map"></div>
 
-  </div>
-  <div id="message">Location saved</div>
-  <% include ./partials/_scripts.ejs %>
-    <% include ./partials/_gmaps_api.ejs %>
+    <div id="map" data-mapId="<%= mapId %>"></div>
+    <div id="infoBox">
+      <table>
+        <tr>
+          <td>
+            <h4>Save a location</h4>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <form id="infoForm" method="POST" action="/maps/map_id/location">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="locationTitle" name="locationTitle" placeholder="Title" type="text">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <textarea class="locationDesc" name="locationDesc" placeholder="Description Textarea"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input class="locationImage" name="locationImage" placeholder="Image URL" type="text">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button id='save'>Save</button>
+          </td>
+        </tr>
+        </form>
+      </table>
 
+    </div>
+    <div id="message">Location saved</div>
+    <% include ./partials/_scripts.ejs %>
+      <% include ./partials/_gmaps_api.ejs %>
+        <script src="/scripts/data-helpers.js"></script>
+        <script src="/scripts/maps.js"></script>
 </body>
 
 </html>

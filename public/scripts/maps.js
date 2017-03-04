@@ -10,6 +10,8 @@
     let infowindow = new google.maps.InfoWindow({
       content: document.getElementById('infoBox')
     });
+
+
     google.maps.event.addListener(map, 'click', function(event) {
       let marker = new google.maps.Marker({
         position: event.latLng,
@@ -20,7 +22,23 @@
         infowindow.open(map, marker);
       });
     });
+    ////////////
+
+    var card = document.getElementById('pac-card');
+    var input = document.getElementById('pac-input');
+    var types = document.getElementById('type-selector');
+    var strictBounds = document.getElementById('strict-bounds-selector');
+
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+
+
   };
+
+
+
 
   $(function() {
 
@@ -44,25 +62,53 @@
 
     });
 
+
+
     let addMarkerCenterMap = function(data) {
       var newBoundary = new google.maps.LatLngBounds();
       for (let i = 0; i < data.length; i++) {
         var latLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
         var marker = new google.maps.Marker({
           position: latLng,
-          map: currentMap
+          map: currentMap,
+          id: data[i].id,
+          title: data[i].title
         });
         newBoundary.extend(marker.position);
+
       }
       currentMap.fitBounds(newBoundary);
     };
 
+
+    let getMarkerContent = (data) => {
+      for (let i = 0; i < data.length; i++) {
+
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(data[i].latitude, data[i].longitude),
+          map: currentMap,
+          title: data[i].title
+        });
+
+        google.maps.addListener(marker, 'click', function(marker, i) {
+          // return function() {
+          console.log("TEST: ");
+          infowindow.setContent(data[i].description);
+          infowindow.open(currentMap, marker);
+          // }
+        });
+
+      }
+
+    };
+
     $.getJSON("/locations/").then(function(data) {
       addMarkerCenterMap(data);
+      // getMarkerContent(data);
     });
 
 
 
-  });
+  })
 
 })();
