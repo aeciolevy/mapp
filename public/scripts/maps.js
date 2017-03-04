@@ -4,10 +4,6 @@
 
   window.initMap = function initMap() {
 
-    // let california = {
-    //   lat: 37.4419,
-    //   lng: -122.1419
-    // };
     var map = new google.maps.Map(document.getElementById('map'), {});
 
     currentMap = map;
@@ -68,4 +64,5 @@
 
 
   });
+
 })();
