@@ -46,6 +46,7 @@ app.use(function(req, res, next){
   res.locals.apiQuery = '';
   res.locals.gMapsApiKey = API_KEY;
   res.locals.user_id = req.session.user_id;
+  res.locals.user_name = req.session.user_name;
   next();
 });
 

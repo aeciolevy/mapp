@@ -27,7 +27,7 @@ module.exports = (knex) => {
           .then((results) => {
             if (results.length) {
               req.session.user_id = results[0].id;
-              req.sesson.name = results[0].name;
+              req.session.user_name = results[0].name;
               res.redirect("/maps");
             } else {
               res.status(401).send("No user of that ID");
