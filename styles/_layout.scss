@@ -1,7 +1,7 @@
 body {
   background-color: #eee;
   font-family: $font-stack;
-  padding-top: 4em;
+  padding-top: 5*$space;
 }
 
 *, *::before, *::after {
@@ -13,4 +13,8 @@ body {
     margin: 0 auto;
     width: 75%;
   }
+}
+
+.navbar-nav .nav-user {
+  display: inline-block;
 }

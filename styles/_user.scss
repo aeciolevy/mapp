@@ -1,0 +1,16 @@
+.user {
+  &-bio {
+    padding: $space;
+  }
+
+  &-map {
+    &-fav,&-contrib {
+      padding: $space;
+    }
+
+    &--section-title {
+      padding-bottom: 0.5*$space;
+    }
+  }
+
+}
