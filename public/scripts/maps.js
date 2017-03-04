@@ -27,8 +27,10 @@
           longitude: currentMarker.getPosition().lng()
         }
       }).then();
+
     });
   });
+
 
   window.initMap = function initMap() {
     let messagewindow;
@@ -46,19 +48,15 @@
       content: document.getElementById('infoBox')
     });
 
-    ////////////////////////////////////////////
 
-
-
-
-
-
-
-    //////////////////////////////////////
+    infowindow = new google.maps.InfoWindow({
+      content: document.getElementById('infoBox')
+    });
 
     // messagewindow = new google.maps.InfoWindow({
     //   content: document.getElementById('message')
     // });
+
 
     google.maps.event.addListener(map, 'click', function(event) {
       let marker = new google.maps.Marker({
