@@ -1,9 +1,14 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-    <span class="navbar-brand"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>mapp</span>
+      <span class="navbar-brand">
+        <a class="maps-home" href="/maps">
+        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+        mapp
+        </a>
+      </span>
     <% if (user_id) { %>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href=#>Howdy!</a></li>
+      <li><a href="/users/<%= user_id %>">Howdy, <%= user.name %>!</a></li>
     <ul>
     <% } else { %>
     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
