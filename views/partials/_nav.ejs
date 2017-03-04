@@ -23,7 +23,7 @@
       </li>
       <li class="navbar-map">
         <p class="navbar-btn">
-          <a class="btn btn-sm btn-success"><span class="fa fa-map"></span> Create new map</a>
+          <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#new-map--modal"><span class="fa fa-map"></span> Create new map</a>
         </p>
       </li>
     <% } else { %>
@@ -34,3 +34,21 @@
   </div>
 </div>
 </nav>
+
+<div class="modal fade" id="new-map--modal" tabindex="-1" role="dialog" aria-labelledby="new-map--modal-Label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create New Mapp</h4>
+      </div>
+      <div class="modal-body">
+        <p> Holy modal, Batman! </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

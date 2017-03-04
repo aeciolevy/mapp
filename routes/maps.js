@@ -11,10 +11,10 @@ module.exports = (knex) => {
   // GET METHODS
 
   const mapsLists = [
-    {name: "My Mapps", query: "user"},
+    {name: "All", query: "all"},
     {name: "Favorites", query: "favs"},
     {name: "Contributed", query: "contrib"},
-    {name: "All", query: "all"}
+    {name: "Created", query: "user"}
   ];
   //GEt METHOD FOR /MAPS
   router.get('/', (req, res) => {
@@ -26,7 +26,7 @@ module.exports = (knex) => {
       .from('maps');
     //Query for user maps
     if (req.query.show === 'user') {
-      currentList = 'My Mapps';
+      currentList = 'Created';
       selectMaps = knex
       .select('*')
       .from('maps')
@@ -114,5 +114,3 @@ module.exports = (knex) => {
 
   return router;
 };
-
-

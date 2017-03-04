@@ -10,12 +10,11 @@
       font-size: 1.75em;
       padding: $space;
     }
-
   }
 
   &-tabs {
     height: auto;
-    padding-bottom: $space;
+    padding: $space 0;
   }
 
   &-thumbnail {
