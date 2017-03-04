@@ -105,7 +105,7 @@ module.exports = (knex) => {
   });
 
   router.get("/:map_id", (req, res) => {
-    res.locals.apiQuery = "&callback=initMap";
+    res.locals.apiQuery = "&callback=initMap&libraries=places";
     res.render("maps_show", {
       mapId: req.params.map_id
     });

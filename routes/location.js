@@ -45,14 +45,6 @@ module.exports = (knex) => {
       user_id: req.session.user_id })
       .then((rows) => {
       });
-    // knex.insert({
-    //   title: req.body.title,
-    //   description: req.body.description,
-    //   latitude: req.body.latitude,
-    //   longitude: req.body.longitude,
-    //   map_id: req.params.id,
-    //   user_id: req.session.user_id
-    // }).into('locations').
   });
 
   //Delete Location
