@@ -3,14 +3,8 @@
   var currentMap;
 
   window.initMap = function initMap() {
-
-    // let california = {
-    //   lat: 37.4419,
-    //   lng: -122.1419
-    // };
     var map = new google.maps.Map(document.getElementById('map'), {
     });
-
     currentMap = map;
     let infowindow = new google.maps.InfoWindow({
       content: document.getElementById('infoBox')
@@ -22,22 +16,25 @@
       });
       google.maps.event.addListener(marker, 'click', function() {
         currentMarker = marker;
+        let markerID = marker.get('id');
+        console.log('Marker ID:', markerID);
         infowindow.open(map, marker);
       });
     });
   };
 
   $(function(){
-    //
     $('#infoForm').submit(function(event) {
       event.preventDefault();
+      let $map = $('#map');
+      let $data = $map.data();
       const $form = $(this);
       const $title = $('.locationTitle').val();
       const $desc = $('.locationDesc').val();
       const $image = $('.locationImage').val();
       $.ajax({
         method: 'POST',
-        url: 'http://localhost:8080/maps/map_id/location',
+        url: `/locations/${$data.mapid}`,
         data: {
           title: $title,
           description: $desc,
@@ -54,19 +51,16 @@
         var latLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
         var marker = new google.maps.Marker({
           position: latLng,
-          map: currentMap
+          map: currentMap,
+          id: data[i].id
         });
         newBoundary.extend(marker.position);
       }
       currentMap.fitBounds(newBoundary);
     };
-
-    $.getJSON("/locations/").then(function(data){
-      addMarkerCenterMap(data);
-    });
-
+    let $map = $('#map');
+    let $data = $map.data();
+    $.getJSON(`/locations/?show=maps&mapId=${$data.mapid}`).then(addMarkerCenterMap);
   });
-
-
 })();
 
