@@ -84,41 +84,15 @@ module.exports = (knex) => {
   router.post("/map_id/location", (req, res) => {
     console.log('BODYY:::', req.body);
 
-    res.locals.apiQuery = "&callback=initMap";
-
     if (!req.body.locationTitle) {
       res.status(400).json({
         error: 'invalid request: no data in POST body'
       });
       return;
     }
-    alert('stestset');
-    let locationData = {
-      title: req.body.locationTitle,
-      description: req.body.locationDesc,
-      image: req.body.locationImage,
-      latitude: 'ATTITUDE',
-      longitude: 'LONGITDUDE',
-      map_id: 5,
-      user_id: 3
-    };
-
-    res.redirect('/map', locationData);
-
-    // DataHelpers.saveLocation(locationData, (err) => {
-    //   if (err) {
-    //     res.status(500).json({
-    //       error: err.message
-    //     });
-    //   } else {
-    //     res.status(201).send('SUCCESS');
-    //   }
-    // });
-
-
   });
 
-  router.get("/map", (req, res) => {
+  router.get("/:map_id", (req, res) => {
     res.locals.apiQuery = "&callback=initMap&libraries=places";
     res.render("maps_show");
   });
