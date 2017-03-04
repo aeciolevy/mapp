@@ -96,7 +96,7 @@ module.exports = (knex) => {
       description: req.body.locationDesc,
       image: req.body.locationImage,
       latitude: 'ATTITUDE',
-      longitude: 'ONGITDUDE',
+      longitude: 'LONGITDUDE',
       map_id: 5,
       user_id: 3
     }
