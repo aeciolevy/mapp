@@ -1,7 +1,7 @@
 body {
   background-color: #eee;
   font-family: $font-stack;
-  padding-top: 5*$space;
+  padding-top: $nav-height + 3*$space;
 }
 
 *, *::before, *::after {
@@ -15,6 +15,14 @@ body {
   }
 }
 
-.navbar-nav .nav-user {
-  display: inline-block;
+.navbar-brand {
+  top: -0.25em
+}
+
+.navbar-fixed-top, .navbar-nav li a {
+ line-height: $nav-height;
+}
+
+.navbar-map {
+  top: 0.4em
 }

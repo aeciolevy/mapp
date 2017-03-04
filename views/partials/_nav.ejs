@@ -1,29 +1,36 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-      <span class="navbar-brand">
-        <a class="maps-home" href="/maps">
-        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-        mapp
-        </a>
-      </span>
-    <% if (user_id) { %>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-user"><a href="/users/<%= user_id %>">Howdy, <%= user_name %>!</a></li>
-    <ul>
-    <% } else { %>
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
+    <ul class="nav navbar-nav">
+      <li>
+          <a class="navbar-brand maps-home" href="/maps"><span class="fa fa-map-marker"></span> mapp</a>
+      </li>
+    </ul>
+
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-    </button>
+      </button>
+    </div>
 
-  <div class="collapse navbar-collapse" id="main-nav">
+    <div class="collapse navbar-collapse" id="#navbar-options">
     <ul class="nav navbar-nav navbar-right">
+    <% if (user_id) { %>
+      <li>
+        <a href="/users/<%= user_id %>">Howdy, <%= user_name %>!</a>
+      </li>
+      <li class="navbar-map">
+        <p class="navbar-btn">
+          <a class="btn btn-sm btn-success"><span class="fa fa-map"></span> Create new map</a>
+        </p>
+      </li>
+    <% } else { %>
       <li><a href="#">Register</a></li>
       <li><a href="#">Login</a></li>
+    <% } %>
     </ul>
   </div>
-  <% } %>
 </div>
 </nav>
