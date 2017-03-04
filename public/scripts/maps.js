@@ -24,13 +24,15 @@
   $(function(){
     $('#infoForm').submit(function(event) {
       event.preventDefault();
+      let $map = $('#map');
+      let $data = $map.data();
       const $form = $(this);
       const $title = $('.locationTitle').val();
       const $desc = $('.locationDesc').val();
       const $image = $('.locationImage').val();
       $.ajax({
         method: 'POST',
-        url: 'http://localhost:8080/maps/map_id/location',
+        url: `/locations/${$data.mapid}`,
         data: {
           title: $title,
           description: $desc,
