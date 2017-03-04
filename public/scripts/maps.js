@@ -1,78 +1,66 @@
-function saveLocation(lat, lng) {
-  $('#infoForm').submit(function(event) {
-    event.preventDefault();
-    console.log(this);
-    alert('NEW?');
+(function() {
+  var currentMarker;
+  var currentMap;
 
-    const $form = $(this).closest('form');
-    const $title = $form.find('.locationTitle').val();
-    const $desc = $form.find('.locationDesc').val();
-    const $image = $form.find('.locationImage').val();
-
-    $.ajax({
-      method: 'POST',
-      url: 'http://localhost:8080/maps/map_id/location',
-      data: {
-        title: $title,
-        description: $desc,
-        // TODO image: $image,
-        latitude: lat,
-        longitude: lng
-      }
-
-    }).then((data) => {
-
-      alert('THEN');
-      console.log('DATAAAAAAA', data);
-      res.send("yay?");
-
-    }).fail(function(xhr, err) {
-      console.log(err);
-      alert('LAME');
+  window.initMap = function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
     });
-
-  });
-}
-
-function initMap() {
-  let map;
-  let marker;
-  let infowindow;
-  let messagewindow;
-  let saveLat;
-  let saveLng;
-  let california = {
-    lat: 37.4419,
-    lng: -122.1419
+    currentMap = map;
+    let infowindow = new google.maps.InfoWindow({
+      content: document.getElementById('infoBox')
+    });
+    google.maps.event.addListener(map, 'click', function(event) {
+      let marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        currentMarker = marker;
+        let markerID = marker.get('id');
+        console.log('Marker ID:', markerID);
+        infowindow.open(map, marker);
+      });
+    });
   };
 
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: california,
-    zoom: 13
-  });
-
-  infowindow = new google.maps.InfoWindow({
-    content: document.getElementById('infoBox')
-  });
-
-  // messagewindow = new google.maps.InfoWindow({
-  //   content: document.getElementById('message')
-  // });
-
-  google.maps.event.addListener(map, 'click', function(event) {
-    marker = new google.maps.Marker({
-      position: event.latLng,
-      map: map
+  $(function(){
+    $('#infoForm').submit(function(event) {
+      event.preventDefault();
+      let $map = $('#map');
+      let $data = $map.data();
+      const $form = $(this);
+      const $title = $('.locationTitle').val();
+      const $desc = $('.locationDesc').val();
+      const $image = $('.locationImage').val();
+      $.ajax({
+        method: 'POST',
+        url: `/locations/${$data.mapid}`,
+        data: {
+          title: $title,
+          description: $desc,
+          image: $image,
+          latitude: currentMarker.getPosition().lat(),
+          longitude: currentMarker.getPosition().lng()
+        }
+      }).then();
     });
 
-
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map, marker);
-    });
-    saveLat = marker.getPosition().lat();
-    saveLng = marker.getPosition().lng();
-    saveLocation(saveLat, saveLng);
-
+    let addMarkerCenterMap = function(data){
+      var newBoundary = new google.maps.LatLngBounds();
+      for (let i = 0; i < data.length; i++){
+        var latLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: currentMap,
+          id: data[i].id
+        });
+        newBoundary.extend(marker.position);
+      }
+      currentMap.fitBounds(newBoundary);
+    };
+    let $map = $('#map');
+    let $data = $map.data();
+    $.getJSON(`/locations/?show=maps&mapId=${$data.mapid}`).then(addMarkerCenterMap);
   });
+})();
 
-}

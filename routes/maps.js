@@ -102,34 +102,17 @@ module.exports = (knex) => {
       });
       return;
     }
-
-    let locationData = {
-      title: req.body.locationTitle,
-      description: req.body.locationDesc,
-      image: req.body.locationImage,
-      latitude: 'ATTITUDE',
-      longitude: 'ONGITDUDE',
-      map_id: 5,
-      user_id: 3
-    }
-
-    // DataHelpers.saveLocation(locationData, (err) => {
-    //   if (err) {
-    //     res.status(500).json({
-    //       error: err.message
-    //     });
-    //   } else {
-    //     res.status(201).send('SUCCESS');
-    //   }
-    // });
-
-
   });
 
   router.get("/:map_id", (req, res) => {
     res.locals.apiQuery = "&callback=initMap";
-    res.render("maps_show");
+    res.render("maps_show", {
+      mapId: req.params.map_id
+    });
   });
+
 
   return router;
 };
+
+

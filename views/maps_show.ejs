@@ -17,13 +17,12 @@
   </style>
   <% include ./partials/_head.ejs %>
 </head>
-
 <body>
   <header>
     <% include ./partials/_nav.ejs %>
   </header>
 
-  <div id="map"></div>
+  <div id="map" data-mapId="<%= mapId %>"></div>
   <div id="infoBox">
     <table>
       <tr>
@@ -33,7 +32,7 @@
       </tr>
       <tr>
         <td>
-          <form id="infoForm" method="POST" action="/maps/map_id/locations">
+          <form id="infoForm" method="POST" action="/maps/map_id/location">
         </td>
       </tr>
       <tr>
@@ -63,7 +62,7 @@
   <div id="message">Location saved</div>
     <% include ./partials/_scripts.ejs %>
     <% include ./partials/_gmaps_api.ejs %>
-
+<script src="/scripts/maps.js"></script>
 </body>
 
 </html>
