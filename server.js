@@ -62,7 +62,7 @@ const initialDb = require("./db/initialDb");
 // Mount all resource routes
 app.use("/users", usersRoutes(knex));
 app.use("/maps", mapsRoutes(queries));
-app.use("/location", locationRoutes(knex));
+app.use("/locations", locationRoutes(knex));
 
 
 //Test routes
