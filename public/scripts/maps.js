@@ -16,6 +16,8 @@
       });
       google.maps.event.addListener(marker, 'click', function() {
         currentMarker = marker;
+        let markerID = marker.get('id');
+        console.log('Marker ID:', markerID);
         infowindow.open(map, marker);
       });
     });
@@ -49,7 +51,8 @@
         var latLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
         var marker = new google.maps.Marker({
           position: latLng,
-          map: currentMap
+          map: currentMap,
+          id: data[i].id
         });
         newBoundary.extend(marker.position);
       }
