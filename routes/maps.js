@@ -3,6 +3,13 @@
 const express = require('express');
 const router = express.Router();
 
+
+const thumbnail = require("../lib/thumbnail.js");
+
+function createThumbnailUrl(map) {
+  map.thumbURL = '';
+}
+
 module.exports = (knex) => {
 
   // GET METHODS
@@ -52,6 +59,7 @@ module.exports = (knex) => {
     }
     //Promisse
     selectMaps.then(maps => {
+      maps.forEach(thumbnail.createUrl);
       if (req.session.user_id) {
         res.render('./maps/index', {
           maps: maps,
