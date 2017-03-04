@@ -96,7 +96,7 @@ module.exports = (knex) => {
       description: req.body.locationDesc,
       image: req.body.locationImage,
       latitude: 'ATTITUDE',
-      longitude: 'ONGITDUDE',
+      longitude: 'LONGITDUDE',
       map_id: 5,
       user_id: 3
     };
@@ -114,15 +114,8 @@ module.exports = (knex) => {
 
   });
 
-<<<<<<< HEAD
-  router.get("/:map_id", (req, res) => {
-    res.locals.apiQuery = "&callback=initMap";
-=======
-
-  //Temporary to test the map
   router.get("/map", (req, res) => {
-    res.locals.apiQuery = "&libraries=places&callback=initMap";
->>>>>>> features/searchbar
+    res.locals.apiQuery = "&callback=initMap&libraries=places";
     res.render("maps_show");
   });
 
