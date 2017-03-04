@@ -6,8 +6,23 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   //Show Location Data
+  router.get('/', (req, res) => {
+    let getLocations = knex('locations')
+    .select('*');
+    getLocations.then(data => {
+      res.json(data);
+    });
+  });
+
   router.get('/:id', (req, res) => {
-    res.send('Location Id tested');
+    let getOneLocation = knex('locations')
+    .select('*')
+    .where({
+      id: req.params.id
+    });
+    getOneLocation.then(data => {
+      res.json(data);
+    });
   });
 
   //Update Location Data

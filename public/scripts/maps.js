@@ -1,20 +1,40 @@
-(function(){
+(function() {
   var currentMarker;
+  var currentMap;
+
+  window.initMap = function initMap() {
+
+    // let california = {
+    //   lat: 37.4419,
+    //   lng: -122.1419
+    // };
+    var map = new google.maps.Map(document.getElementById('map'), {
+    });
+
+    currentMap = map;
+    let infowindow = new google.maps.InfoWindow({
+      content: document.getElementById('infoBox')
+    });
+    google.maps.event.addListener(map, 'click', function(event) {
+      let marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        currentMarker = marker;
+        infowindow.open(map, marker);
+      });
+    });
+  };
+
   $(function(){
     //
     $('#infoForm').submit(function(event) {
-      console.log('testing this', this);
       event.preventDefault();
-      console.log('testing this scope', this);
-      alert('NEW?');
-
       const $form = $(this);
       const $title = $('.locationTitle').val();
       const $desc = $('.locationDesc').val();
       const $image = $('.locationImage').val();
-      console.log('title: ', $title);
-      console.log('desc: ', $desc);
-      console.log('image: ', $image);
       $.ajax({
         method: 'POST',
         url: 'http://localhost:8080/maps/map_id/location',
@@ -27,40 +47,26 @@
         }
       }).then();
     });
-  });
 
-  window.initMap = function initMap() {
-    let messagewindow;
-    let california = {
-      lat: 37.4419,
-      lng: -122.1419
+    let addMarkerCenterMap = function(data){
+      var newBoundary = new google.maps.LatLngBounds();
+      for (let i = 0; i < data.length; i++){
+        var latLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: currentMap
+        });
+        newBoundary.extend(marker.position);
+      }
+      currentMap.fitBounds(newBoundary);
     };
 
-    let map = new google.maps.Map(document.getElementById('map'), {
-      center: california,
-      zoom: 13
+    $.getJSON("/locations/").then(function(data){
+      addMarkerCenterMap(data);
     });
 
-    let infowindow = new google.maps.InfoWindow({
-      content: document.getElementById('infoBox')
-    });
-
-    // messagewindow = new google.maps.InfoWindow({
-    //   content: document.getElementById('message')
-    // });
-
-    google.maps.event.addListener(map, 'click', function(event) {
-      let marker = new google.maps.Marker({
-        position: event.latLng,
-        map: map
-      });
+  });
 
 
-      google.maps.event.addListener(marker, 'click', function() {
-        currentMarker = marker;
-        infowindow.open(map, marker);
-      });
-    });
-  };
 })();
 
