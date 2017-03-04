@@ -3,6 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
+
+const thumbnail = require("../lib/thumbnail.js");
+
 module.exports = (knex) => {
 
   // GET METHODS
@@ -52,19 +55,28 @@ module.exports = (knex) => {
     }
     //Promisse
     selectMaps.then(maps => {
-      if (req.session.user_id) {
-        res.render('./maps/index', {
-          maps: maps,
-          mapsLists: mapsLists,
-          currentList: currentList
-        });
-      } else {
-        res.render('./maps/public', {
-          maps: maps
-        });
-      }
+      Promise.all(maps.map(thumbnail.createUrl))
+      .then((maps) => {
+        if (req.session.user_id) {
+          console.log(maps);
+          res.render('./maps/index', {
+            maps: maps,
+            mapsLists: mapsLists,
+            currentList: currentList
+          });
+        } else {
+          res.render('./maps/public', {
+            maps: maps
+          });
+        }
+      })
+      .catch(() => {
+        console.log("OH MY LORD, WHY WHY WHY DID IT HAVE TO BE BEEEEEEESSSSSSSSSS");
+      });
+
     });
   });
+
 
   //POST METHODS
   //POST were not tested yet.
