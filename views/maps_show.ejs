@@ -17,11 +17,38 @@
   </style>
   <% include ./partials/_head.ejs %>
 </head>
+
 <body>
   <header>
     <% include ./partials/_nav.ejs %>
   </header>
+  <div class="pac-card" id="pac-card">
+    <div>
+      <div id="title">
+        Autocomplete search
+      </div>
+      <div id="type-selector" class="pac-controls">
+        <input type="radio" name="type" id="changetype-all" checked="checked">
+        <label for="changetype-all">All</label>
 
+        <input type="radio" name="type" id="changetype-establishment">
+        <label for="changetype-establishment">Establishments</label>
+
+        <input type="radio" name="type" id="changetype-address">
+        <label for="changetype-address">Addresses</label>
+
+        <input type="radio" name="type" id="changetype-geocode">
+        <label for="changetype-geocode">Geocodes</label>
+      </div>
+      <div id="strict-bounds-selector" class="pac-controls">
+        <input type="checkbox" id="use-strict-bounds" value="">
+        <label for="use-strict-bounds">Strict Bounds</label>
+      </div>
+    </div>
+    <div id="pac-container">
+      <input id="pac-input" type="text" placeholder="Enter a location">
+    </div>
+  </div>
   <div id="map" data-mapId="<%= mapId %>"></div>
   <div id="infoBox">
     <table>
@@ -42,7 +69,7 @@
       </tr>
       <tr>
         <td>
-          <textarea class="locationDesc"name="locationDesc" placeholder="Description Textarea"></textarea>
+          <textarea class="locationDesc" name="locationDesc" placeholder="Description Textarea"></textarea>
         </td>
       </tr>
       <tr>
@@ -60,9 +87,10 @@
 
   </div>
   <div id="message">Location saved</div>
-    <% include ./partials/_scripts.ejs %>
+  <% include ./partials/_scripts.ejs %>
     <% include ./partials/_gmaps_api.ejs %>
-<script src="/scripts/scriptMaps.js"></script>
+      <script src="/scripts/scriptMaps.js"></script>
+
 </body>
 
 </html>

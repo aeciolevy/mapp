@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/_head.ejs %>
+</head>
+<body>
+  <header>
+    <% include ../partials/_nav.ejs %>
+  </header>
+  <main class="user container">
+    <section class="user-bio panel">
+      <h1><%= user.name %></h1>
+      <p><%= user.email %></p>
+    </div>
+    </section>
+    <section class="user-maps">
+      <% if (favMaps.length !== 0) { %>
+        <section class="user-map-fav panel">
+          <h2 class="user-map--section-title"><%= user.name %>'s Favourites</h2>
+          <div class="row">
+              <% favMaps.forEach(map => { %>
+              <div class="map-thumbnail col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <a class="thumbnail" href="/maps/<%= map.id %>">
+                  <img alt="<%= map.title %>" src="<%= map.thumbURL %>">
+                  <h1 class="caption map-thumbnail-name"><%= map.title %></h1>
+              </a>
+            </div>
+            <% }) %>
+          </div>
+        </section>
+      <% } %>
+      <% if (contribMaps.length !== 0) { %>
+        <section class="user-map-contrib panel">
+          <h2 class="user-map--section-title"><%= user.name %>'s Contributed</h2>
+          <div class="row">
+            <% contribMaps.forEach(map => { %>
+              <div class="map-thumbnail col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <a class="thumbnail" href="/maps/<%= map.id %>">
+                  <img alt="<%= map.title %>" src="<%= map.thumbURL %>">
+                  <h1 class="caption map-thumbnail-name"><%= map.title %></h1>
+                </a>
+              </div>
+            <% }) %>
+          </div>
+        </section>
+      <% } %>
+    </section>
+  </main>
+  <% include ../partials/_scripts.ejs %>
+  <% include ../partials/_gmaps_api.ejs %>
+</body>
+</html>

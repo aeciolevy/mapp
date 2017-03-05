@@ -19,7 +19,8 @@ module.exports = (knex) => {
   //GEt METHOD FOR /MAPS
   router.get('/', (req, res) => {
     let currentList = 'All';
-    let perPage = 12;
+    //TODO: pagination
+    // let perPage = 12;
     let selectMaps = knex
       .select('*')
       .from('maps');
@@ -58,7 +59,6 @@ module.exports = (knex) => {
       Promise.all(maps.map(thumbnail.createUrl))
       .then((maps) => {
         if (req.session.user_id) {
-          console.log(maps);
           res.render('./maps/index', {
             maps: maps,
             mapsLists: mapsLists,
@@ -100,12 +100,12 @@ module.exports = (knex) => {
   });
 
   router.get("/:map_id", (req, res) => {
+
     res.locals.apiQuery = "&callback=initMap&libraries=places";
     res.render("maps_show", {
       mapId: req.params.map_id
     });
+
   });
   return router;
 };
-
-

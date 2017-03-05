@@ -1,10 +1,17 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 module.exports = (knex) => {
-
+  //Show All locations
+  router.get('/', (req, res) => {
+    let getAllLocations = knex('locations')
+      .select('*');
+    getAllLocations.then(data => {
+      res.json(data);
+    });
+  });
   //Show Location Data
   router.get('/', (req, res) => {
     let getLocations = knex('locations')
@@ -50,6 +57,7 @@ module.exports = (knex) => {
   //Delete Location
   // router.post('/:id/delete', (req, res) => {
   // });
+
 
   return router;
 };
