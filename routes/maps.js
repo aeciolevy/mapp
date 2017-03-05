@@ -11,10 +11,10 @@ module.exports = (knex) => {
   // GET METHODS
 
   const mapsLists = [
-    {name: "My Mapps", query: "user"},
+    {name: "All", query: "all"},
     {name: "Favorites", query: "favs"},
     {name: "Contributed", query: "contrib"},
-    {name: "All", query: "all"}
+    {name: "Created", query: "user"}
   ];
   //GEt METHOD FOR /MAPS
   router.get('/', (req, res) => {
@@ -26,7 +26,7 @@ module.exports = (knex) => {
       .from('maps');
     //Query for user maps
     if (req.query.show === 'user') {
-      currentList = 'My Mapps';
+      currentList = 'Created';
       selectMaps = knex
       .select('*')
       .from('maps')
@@ -84,10 +84,19 @@ module.exports = (knex) => {
   router.post("/:map_id/favorite", (req, res) => {
     res.status(201).send("map favourited");
   });
+
   //Add a Map
   router.post("/", (req, res) => {
-    // res.render("maps_index");
+    knex('maps')
+     .insert({
+       title: req.body.title,
+       user_id: req.session.user_id })
+       .returning('id')
+       .then((id) => {
+         res.redirect(`/maps/${id}`);
+       });
   });
+
   //Delete a Map
   router.post("/delete", (req, res) => {
     // res.render("maps_index");
