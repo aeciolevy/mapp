@@ -5,7 +5,18 @@
   var allMarkers = [];
   window.initMap = function initMap() {
 
-    var map = new google.maps.Map(document.getElementById('map'), {});
+    var map = new google.maps.Map(document.getElementById('map'), {
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.LEFT_BOTTOM
+      }
+    });
+
+    var card = document.getElementById('pac-card');
+    var input = document.getElementById('pac-input');
+
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
 
     currentMap = map;
     var infowindow = new google.maps.InfoWindow({
@@ -25,14 +36,8 @@
         infowindow.open(map, marker);
       });
     });
-    ////////////
 
-    var card = document.getElementById('pac-card');
-    var input = document.getElementById('pac-input');
-    var types = document.getElementById('type-selector');
-    var strictBounds = document.getElementById('strict-bounds-selector');
 
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
