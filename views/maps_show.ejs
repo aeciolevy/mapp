@@ -20,7 +20,27 @@
   <div class="control-favorite" id="control-favorite">
     <span class="fa fa-star"></span>
   </div>
+
   <div id="map" data-mapId="<%= mapId %>"></div>
+
+    <div id="infoBox">
+      <div class="modal-header">
+        <h3 class="modal-title">Save Location</h3>
+      </div>
+      <form id="infoForm" method="POST" action="/maps/map_id/location">
+        <div class="form-group">
+          <input type="text" class="locationTitle form-control" placeholder="Title">
+        </div>
+          <div class="form-group">
+            <textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description"></textarea>
+          </div>
+        <div class="form-group">
+          <input type="text" class="locationImage form-control" placeholder="Image URL">
+        </div>
+       <button id='save' type="submit" class="btn btn-default">Submit</button>
+     </form>
+   </div>
+
   <% include ./partials/_scripts.ejs %>
   <% include ./partials/_gmaps_api.ejs %>
   <script src="/scripts/scriptMaps.js"></script>
