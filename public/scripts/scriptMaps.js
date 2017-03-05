@@ -42,6 +42,10 @@
         currentInfoWindow = infowindow;
 
         infowindow.open(map, marker);
+        map.addListener('click', function(e) {
+          currentInfoWindow.close();
+        });
+
       });
     });
 
