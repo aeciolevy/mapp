@@ -1,74 +1,29 @@
 <!DOCTYPE html >
 <html>
-
 <head>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <title>From Info Windows to a Database: Saving User-Added Form Data</title>
-  <style>
-    /* Optional: Makes the sample page fill the window. */
-
-
-  </style>
+  <title>Map Title</title>
   <% include ./partials/_head.ejs %>
 
 
 </head>
-
 <body>
   <header>
     <% include ./partials/_nav.ejs %>
   </header>
   <div class="pac-card" id="pac-card">
-    <div>
-      <div id="title">
-        Autocomplete search
-      </div>
-      <div id="type-selector" class="pac-controls">
-        <input type="radio" name="type" id="changetype-all" checked="checked">
-        <label for="changetype-all">All</label>
-
-        <input type="radio" name="type" id="changetype-establishment">
-        <label for="changetype-establishment">Establishments</label>
-
-        <input type="radio" name="type" id="changetype-address">
-        <label for="changetype-address">Addresses</label>
-
-        <input type="radio" name="type" id="changetype-geocode">
-        <label for="changetype-geocode">Geocodes</label>
-      </div>
-      <div id="strict-bounds-selector" class="pac-controls">
-        <input type="checkbox" id="use-strict-bounds" value="">
-        <label for="use-strict-bounds">Strict Bounds</label>
-      </div>
-    </div>
-    <div id="pac-container">
-      <input id="pac-input" type="text" placeholder="Enter a location">
+    <div class="pac-container" id="pac-container">
+      <input class="pac-input" id="pac-input" type="text" placeholder="Enter a location">
     </div>
   </div>
-
+  <div class="control-favorite" id="control-favorite">
+    <span class="fa fa-star"></span>
+  </div>
   <div id="map" data-mapId="<%= mapId %>"></div>
-  <div id="infoBox">
-    <div class="modal-header">
-    <h3 class="modal-title">Save Location</h3>
-    </div>
-    <form id="infoForm" method="POST" action="/maps/map_id/location">
-      <div class="form-group">
-        <input type="text" class="locationTitle form-control" placeholder="Title">
-      </div>
-      <div class="form-group">
-        <textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description"></textarea>
-      </div>
-      <div class="form-group">
-        <input type="text" class="locationImage form-control" placeholder="Image URL">
-      </div>
-      <button id='save' type="submit" class="btn btn-default">Submit</button>
-    </form>
-  </div>
-  <div id="message">Location saved</div>
   <% include ./partials/_scripts.ejs %>
-    <% include ./partials/_gmaps_api.ejs %>
-      <script src="/scripts/scriptMaps.js"></script>
+  <% include ./partials/_gmaps_api.ejs %>
+  <script src="/scripts/scriptMaps.js"></script>
 
 </body>
 

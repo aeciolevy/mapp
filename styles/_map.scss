@@ -1,31 +1,12 @@
-#map {
-  height:100%;
-}
-
-.map {
-
-  &-grid {
-    padding: $space;
-  }
-
-  &-tab {
-
-    & &-a {
-      font-size: 1.75em;
-      padding: $space;
+.control-favorite {
+  font-size: 2em;
+  padding: $space;
+    &:hover {
+      color: $favorite;
     }
-  }
-
-  &-tabs {
-    height: auto;
-    padding: $space 0;
-  }
-
-  &-thumbnail {
-
-    &-name {
-      font-size: 1.75em;
-      height: 3em;
+    &.favorited {
+      color: darken($favorite, 20);
+      transform: scale(1.25);
     }
   }
 
@@ -34,53 +15,40 @@
   }
 }
 
-  .pac-card {
-    margin: 10px 10px 0 0;
-    border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    background-color: #fff;
-    font-family: Roboto;
-  }
+.pac-card {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  outline: none;
+  position: absolute;
+  width: 30%;
+  left: $space;
+  top: $space;
+}
 
-  #pac-container {
-    padding-bottom: 12px;
-    margin-right: 12px;
-  }
+.pac-container {
+  background: #fff;
+  padding: $space;
+  position: absolute;
+  left: $space;
+  top: $space;
+  width: 100%;
+}
 
-  .pac-controls {
-    display: inline-block;
-    padding: 5px 11px;
-  }
+.pac-input {
+  background-color: #fff;
+  padding-left: 0.25*$space 0.5*$space;
+  text-overflow: ellipsis;
+  width: 100%;
+}
 
-  .pac-controls label {
-    font-family: Roboto;
-    font-size: 13px;
-    font-weight: 300;
-  }
-
-  #pac-input {
-    background-color: #fff;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-    margin-left: 12px;
-    margin-top:12px;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-    width: 400px;
-  }
-
-  #pac-input:focus {
-    border-color: #4d90fe;
-  }
-
-  #title {
-    color: #fff;
-    background-color: #4d90fe;
-    font-size: 25px;
-    font-weight: 500;
-    padding: 6px 12px;
-  }
+#map {
+  //If you pass in $nav-height to calc(); the browser will interpret this as the string "100% - $nav-height"
+  height: -o-calc(100% - 4.5em);
+  height: -webkit-calc(100% - 4.5em);
+  height: -moz-calc(100% - 4.5em);
+  height: calc(100% - 4.5em);
+  left: 0;
+  position: absolute;
+  top: $nav-height;
+  width: 100%;
+}

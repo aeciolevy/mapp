@@ -2,24 +2,34 @@
   box-sizing: border-box;
 }
 
-
 body {
   background-color: #eee;
   font-family: $font-stack;
-  padding-top: $nav-height + 2.5*$space;
+  padding-top: $nav-lineheight + 2.5*$space;
 }
 
-.navbar-fixed-top, .navbar-nav li a {
-  line-height: $nav-height;
+.navbar-brand {
+  padding: $space;
+}
+
+.navbar-fixed-top {
+  height: $nav-height;
+}
+
+//Overrule bootstrap!
+.navbar-nav li a, {
+  line-height: $nav-lineheight;
+  padding: $space;
+}
+
+.navbar-nav li a.btn, {
+  padding: 0.25*$space $space;
+  position: relative;
+  top: 0.25em;
 }
 
 .navbar-header {
   position: relative;
-  top: 0.6em;
-}
-
-.navbar-map {
-  top: 0.25em
 }
 
 .row {
