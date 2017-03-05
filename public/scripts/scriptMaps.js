@@ -15,8 +15,10 @@
 
     var card = document.getElementById('pac-card');
     var input = document.getElementById('pac-input');
+    var fav = document.getElementById('control-favorite');
 
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fav);
 
     currentMap = map;
     var infowindow = new google.maps.InfoWindow({

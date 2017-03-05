@@ -1,13 +1,13 @@
-#map {
-  //If you pass in $nav-height to calc(); the browser will interpret this as the string "100% - $nav-height"
-  height: -o-calc(100% - 4.5em);
-  height: -webkit-calc(100% - 4.5em);
-  height: -moz-calc(100% - 4.5em);
-  height: calc(100% - 4.5em);
-  left: 0;
-  position: absolute;
-  top: $nav-height;
-  width: 100%;
+.control-favorite {
+  font-size: 2em;
+  padding: $space;
+    &:hover {
+      color: $favorite;
+    }
+    &.favorited {
+      color: darken($favorite, 20);
+      transform: scale(1.25);
+    }
 }
 
 .pac-card {
@@ -36,10 +36,14 @@
   width: 100%;
 }
 
-#title {
-  color: #fff;
-  background-color: #4d90fe;
-  font-size: 25px;
-  font-weight: 500;
-  padding: 6px 12px;
+#map {
+  //If you pass in $nav-height to calc(); the browser will interpret this as the string "100% - $nav-height"
+  height: -o-calc(100% - 4.5em);
+  height: -webkit-calc(100% - 4.5em);
+  height: -moz-calc(100% - 4.5em);
+  height: calc(100% - 4.5em);
+  left: 0;
+  position: absolute;
+  top: $nav-height;
+  width: 100%;
 }
