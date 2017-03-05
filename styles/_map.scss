@@ -4,6 +4,10 @@
 
 .map {
 
+  &-grid {
+    padding: $space;
+  }
+
   &-tab {
 
     & &-a {

@@ -1,11 +1,25 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+
 body {
   background-color: #eee;
   font-family: $font-stack;
-  padding-top: $nav-height + 2.5*$space; 
+  padding-top: $nav-height + 2.5*$space;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
+.navbar-fixed-top, .navbar-nav li a {
+  line-height: $nav-height;
+}
+
+.navbar-header {
+  position: relative;
+  top: 0.6em;
+}
+
+.navbar-map {
+  top: 0.25em
 }
 
 .row {
@@ -13,16 +27,4 @@ body {
     margin: 0 auto;
     width: 75%;
   }
-}
-
-.navbar-brand {
-  top: -0.25em
-}
-
-.navbar-fixed-top, .navbar-nav li a {
-  line-height: $nav-height;
-}
-
-.navbar-map {
-  top: 0.25em
 }
