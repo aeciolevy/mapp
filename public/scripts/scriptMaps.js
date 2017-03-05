@@ -1,8 +1,9 @@
 (function() {
+  //Global Variables
   var currentMarker;
   var currentMap;
   var currentInfoWindow;
-  var allMarkers = [];
+  //Initialized Map
   window.initMap = function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
     });
@@ -11,13 +12,12 @@
       content: document.getElementById('infoBox')
     });
     currentInfoWindow = infowindow;
-
+    //Add a new marker
     google.maps.event.addListener(map, 'click', function(event) {
       let marker = new google.maps.Marker({
         position: event.latLng,
         map: map
       });
-      allMarkers.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
         currentMarker = marker;
         let markerID = marker.get('id');
@@ -25,7 +25,39 @@
         infowindow.open(map, marker);
       });
     });
+    //Handle Places events
+    function initialize() {
+      var iw = new google.maps.InfoWindow();
+      google.maps.event.addListener(map, 'click', function(evt) {
+        evt.stop();
+         var request = {
+            placeId: evt.placeId
+          };
+
+        service = new google.maps.places.PlacesService(map);
+        let data = service.getDetails(request, (place, status) => {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            console.log(place);
+            iw.setContent(
+              '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+              `<h4 class="modal-title"> ${place.name} </h4>` +
+              '<div class="modal-body">' +
+                `<p> ${place.formatted_address}&hellip;</p>` +
+              '</div>' +
+              '<div class="modal-footer">' +
+                '<button type="button" class="btn btn-primary">Save changes</button>' +
+              '</div>');
+            iw.setPosition(evt.latLng);
+            iw.open(map);
+          }
+        });
+      });
+    }
+    google.maps.event.addDomListener(window, "load", initialize);
+
   };
+
+
 
   $(function(){
     $('#infoForm').submit(function(event) {
@@ -83,10 +115,8 @@
             getLocationData(data, marker);
           });
         });
-        allMarkers.push(marker);
         newBoundary.extend(marker.position);
       }
-      console.log(allMarkers);
       currentMap.fitBounds(newBoundary);
     };
     let $map = $('#map');
