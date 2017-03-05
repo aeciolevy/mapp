@@ -139,10 +139,10 @@
           '<input type="text" class="locationTitle form-control" value="' + obj.title + '">' +
           '</div>' +
           '<div class="form-group">' +
-          '<textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description">' + obj.description + '</textarea>' +
+          '<textarea type="text" class="locationDesc form-control" rows="4" placeholder="Description">' + obj.description + '</textarea>' +
           '</div>' +
           '<div class="form-group">' +
-          '<input type="text" class="locationImage form-control" value="Image URL">' +
+          '<input type="url" class="locationImage form-control" value="Image URL">' +
           '</div>' +
           '<button id="save" type="submit" class="btn btn-primary btn-xs">Save</button>' +
           '</form>' +
