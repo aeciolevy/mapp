@@ -14,6 +14,8 @@
 
     currentInfoWindow = infowindow;
 
+
+
     google.maps.event.addListener(map, 'click', function(event) {
       $('#infoBox').css('display', 'inline');
       let marker = new google.maps.Marker({
@@ -74,6 +76,7 @@
       infowindow.setContent(
         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
         '<div class="modal-header">' +
+        '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
         '<h3 class="modal-title">' + obj.title + '</h3>' +
         '</div>' +
         '<div class="modal-body">' +
@@ -87,6 +90,9 @@
         '</div>'
       );
       infowindow.open(currentMap, marker);
+      currentMap.addListener('click', function(e) {
+          infowindow.close();
+      });
     };
 
     let addMarkerCenterMap = function(data) {
@@ -105,6 +111,7 @@
             getLocationData(data, marker);
           });
         });
+
         allMarkers.push(marker);
         newBoundary.extend(marker.position);
       }
