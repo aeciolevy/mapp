@@ -7,7 +7,6 @@
   //Initialized Map
   window.initMap = function initMap() {
 
-
     var map = new google.maps.Map(document.getElementById('map'), {
       mapTypeControl: true,
       mapTypeControlOptions: {
@@ -22,6 +21,7 @@
 
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fav);
+
 
 
     var infowindow = new google.maps.InfoWindow({
@@ -40,13 +40,15 @@
 
         currentMarker = marker;
         currentInfoWindow = infowindow;
+
         infowindow.open(map, marker);
       });
     });
 
-//might have to remove this V
+
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
+
 
     //Handle Places events Testing Do not DELETE
     // function initialize() {

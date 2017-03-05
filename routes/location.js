@@ -45,8 +45,6 @@ module.exports = (knex) => {
       }).then((rows) => {});
   });
 
-
-  //Delete Location
   router.post('/:id/delete', (req, res) => {
     console.log(req.params.id);
     knex('locations').where({
