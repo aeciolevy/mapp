@@ -81,8 +81,12 @@ module.exports = (knex) => {
   //POST METHODS
   //POST were not tested yet.
   //Favorite a Map
-  router.post("/:map_id/favorite", (req, res) => {
-    res.status(201).send("map favourited");
+  router.post("/favorite", (req, res) => {
+    if (req.body.isFaved) {
+      console.log("Unfavoriting");
+    } else {
+    console.log("Favoriting!");
+    }
   });
 
   //Add a Map
@@ -102,6 +106,7 @@ module.exports = (knex) => {
     // res.render("maps_index");
   });
 
+//Get a single map
   router.get("/:map_id", (req, res) => {
 
     res.locals.apiQuery = "&callback=initMap&libraries=places";

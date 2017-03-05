@@ -17,9 +17,11 @@
       <input class="pac-input" id="pac-input" type="text" placeholder="Enter a location">
     </div>
   </div>
-  <div class="control-favorite" id="control-favorite">
+  <% if (1===1) {%>
+  <div class="control-favorite" id="control-favorite" data-map-id="<%= mapId %>" data-favorited="">
     <span class="fa fa-star"></span>
   </div>
+  <% } %>
 
   <div id="map" data-mapId="<%= mapId %>"></div>
 
@@ -44,6 +46,7 @@
   <% include ./partials/_scripts.ejs %>
   <% include ./partials/_gmaps_api.ejs %>
   <script src="/scripts/scriptMaps.js"></script>
+  <script src="/scripts/favorite.js"></script>
 
 </body>
 
