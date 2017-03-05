@@ -5,20 +5,7 @@
   var allMarkers = [];
   window.initMap = function initMap() {
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-      mapTypeControl: true,
-      mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.LEFT_BOTTOM
-      }
-    });
-
-    var card = document.getElementById('pac-card');
-    var input = document.getElementById('pac-input');
-    var fav = document.getElementById('control-favorite');
-
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fav);
+    var map = new google.maps.Map(document.getElementById('map'), {});
 
     currentMap = map;
     var infowindow = new google.maps.InfoWindow({
@@ -26,8 +13,6 @@
     });
 
     currentInfoWindow = infowindow;
-
-
 
     google.maps.event.addListener(map, 'click', function(event) {
       $('#infoBox').css('display', 'inline');
@@ -37,12 +22,20 @@
       });
       allMarkers.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
-        currentMarker = marker;
+        console.log(infowindow);
+        // currentMarker = marker;
+
         infowindow.open(map, marker);
       });
     });
 
 
+    var card = document.getElementById('pac-card');
+    var input = document.getElementById('pac-input');
+    var types = document.getElementById('type-selector');
+    var strictBounds = document.getElementById('strict-bounds-selector');
+
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
@@ -123,6 +116,7 @@
           $.getJSON(`/locations/${marker.id}`).then(data => {
             getLocationData(data, marker);
           });
+
         });
 
         allMarkers.push(marker);
@@ -141,3 +135,31 @@
   })
 
 })();
+
+
+
+//
+//
+// $('edit-btn').on('click', function(event) {
+//   event.preventDefault();
+//   alert('works?');
+//   infowindow.setContent(
+//     '<div id="infoBox">' +
+//       '<div class="modal-header">' +
+//       '<h4 class="modal-title">Edit Location</h4>' +
+//       '</div>' +
+//       '<form id="infoForm" method="POST" action="/maps/map_id/location">' +
+//         '<div class="form-group">' +
+//           '<input type="text" class="locationTitle form-control" value="'+ obj.title + '">' +
+//         '</div>' +
+//         '<div class="form-group">' +
+//           '<textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description">' + obj.description + '</textarea>' +
+//         '</div>' +
+//         '<div class="form-group">' +
+//           '<input type="text" class="locationImage form-control" value="Image URL">' +
+//         '</div>' +
+//         '<button id="save" type="submit" class="btn btn-primary btn-xs">Save</button>' +
+//       '</form>' +
+//     '</div>'
+//   );
+// });
