@@ -81,8 +81,27 @@ module.exports = (knex) => {
   //POST METHODS
   //POST were not tested yet.
   //Favorite a Map
-  router.post("/:map_id/favorite", (req, res) => {
-    res.status(201).send("map favourited");
+  router.post("/favorite", (req, res) => {
+    const user_id = req.session.user_id;
+    const map_id = req.body.map_id;
+    if (req.body.isFaved) {
+      knex('favorites')
+      .del()
+      .where({
+        user_id: user_id,
+        map_id: req.body.map_id
+      }).then(() => {
+        res.status(201).send("Map favourited");
+      });
+    } else {
+      knex('favorites')
+      .insert({
+        user_id: req.session.user_id,
+        map_id: req.body.map_id
+      }).then(() => {
+        res.status(201).send("Map unfavourited");
+      });
+    }
   });
 
   //Add a Map
@@ -102,13 +121,34 @@ module.exports = (knex) => {
     // res.render("maps_index");
   });
 
+//Get a single map
   router.get("/:map_id", (req, res) => {
-
+    let map_id = req.params.map_id;
+    let user_id = req.session.user_id;
+    const locations = knex('locations')
+      .select('*')
+      .where('map_id', map_id);
+    let isFavorited;
+    if (user_id) {
+      isFavorited = knex('favorites')
+        .select('id')
+        .where({
+          "map_id": map_id,
+          "user_id": user_id
+        });
+    } else {
+      isFavorited = [];
+    }
     res.locals.apiQuery = "&callback=initMap&libraries=places";
-    res.render("maps_show", {
-      mapId: req.params.map_id
+    Promise.all([locations, isFavorited]).then(mapData => {
+      res.render("maps_show", {
+        locations: mapData[0],
+        isFavorited: mapData[1].length ? true : null,
+        loggedIn: user_id ? true : null,
+        mapId: map_id
+      });
     });
-
   });
+
   return router;
 };
