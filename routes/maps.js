@@ -82,10 +82,25 @@ module.exports = (knex) => {
   //POST were not tested yet.
   //Favorite a Map
   router.post("/favorite", (req, res) => {
+    const user_id = req.session.user_id;
+    const map_id = req.body.map_id;
     if (req.body.isFaved) {
-      console.log("Unfavoriting");
+      knex('favorites')
+      .del()
+      .where({
+        user_id: user_id,
+        map_id: req.body.map_id
+      }).then(() => {
+        res.status(201).send("Map favourited");
+      });
     } else {
-      console.log("Favoriting!");
+      knex('favorites')
+      .insert({
+        user_id: req.session.user_id,
+        map_id: req.body.map_id
+      }).then(() => {
+        res.status(201).send("Map unfavourited");
+      });
     }
   });
 
