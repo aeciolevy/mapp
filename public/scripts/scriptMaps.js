@@ -80,9 +80,9 @@
         '<div class="coordinates">  ' + obj.latitude +' , ' + obj.longitude + '</div>' +
         '</div>' +
         '<div class="modal-footer">' +
-        '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
         '<button id="save-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
         '<button id="edit-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Edit</button>' +
+        '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
         '</div>'
       );
       infowindow.open(currentMap, marker);
