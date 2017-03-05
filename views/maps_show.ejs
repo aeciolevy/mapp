@@ -17,11 +17,15 @@
       <input class="pac-input" id="pac-input" type="text" placeholder="Enter a location">
     </div>
   </div>
-  <% if (1===1) {%>
-  <div class="control-favorite" id="control-favorite" data-map-id="<%= mapId %>" data-favorited="">
+  <% if (loggedIn) { %>
+  <div class="control-favorite <%= isFavorited ? ' favorited' : '' %>" id="control-favorite" data-map-id="<%= mapId %>" data-favorited=<%= isFavorited %>>
     <span class="fa fa-star"></span>
   </div>
   <% } %>
+  <div id="#test">
+    <p> <%= locations %>  <%= isFavorited %>  <%= mapId %> </p>
+  </div>
+
 
   <div id="map" data-mapId="<%= mapId %>"></div>
 

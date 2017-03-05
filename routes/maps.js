@@ -85,7 +85,7 @@ module.exports = (knex) => {
     if (req.body.isFaved) {
       console.log("Unfavoriting");
     } else {
-    console.log("Favoriting!");
+      console.log("Favoriting!");
     }
   });
 
@@ -108,12 +108,32 @@ module.exports = (knex) => {
 
 //Get a single map
   router.get("/:map_id", (req, res) => {
-
+    let map_id = req.params.map_id;
+    let user_id = req.session.user_id;
+    const locations = knex('locations')
+      .select('*')
+      .where('map_id', map_id);
+    let isFavorited;
+    if (user_id) {
+      isFavorited = knex('favorites')
+        .select('id')
+        .where({
+          "map_id": map_id,
+          "user_id": user_id
+        });
+    } else {
+      isFavorited = [];
+    }
     res.locals.apiQuery = "&callback=initMap&libraries=places";
-    res.render("maps_show", {
-      mapId: req.params.map_id
+    Promise.all([locations, isFavorited]).then(mapData => {
+      res.render("maps_show", {
+        locations: mapData[0],
+        isFavorited: mapData[1].length ? true : null,
+        loggedIn: user_id ? true : null,
+        mapId: map_id
+      });
     });
-
   });
+
   return router;
 };
