@@ -28,7 +28,7 @@
         infowindow.open(map, marker);
       });
     });
-    ////////////
+
 
     var card = document.getElementById('pac-card');
     var input = document.getElementById('pac-input');
@@ -47,6 +47,8 @@
 
 
   $(function() {
+
+
 
     $('#infoForm').submit(function(event) {
       event.preventDefault();
@@ -70,6 +72,8 @@
       currentInfoWindow.close();
     });
 
+
+
     let getLocationData = function(data, marker) {
       let obj = data[0];
       let infowindow = new google.maps.InfoWindow();
@@ -81,7 +85,7 @@
         '</div>' +
         '<div class="modal-body">' +
         "<p>I mean, why would a poptart want to live inside a toaster, Rick? I mean, that would be like the scariest place for them to live. You know what I mean? S-S-Samantha. Holy crap, Morty, run! Run for your life, Morty, run! I-I've never seen that thing before in my life, Morty, I don't even know what the hell it is! We-we gotta get out of here, Morty, it's gonna kill us! We're gonna die, Morty! We're gonna die! Listen, Morty, I hate to break it to you but what people call love is just a chemical reaction that compels animals to breed.</p>" +
-        '<div class="coordinates">  ' + obj.latitude +' , ' + obj.longitude + '</div>' +
+        '<div class="coordinates">  ' + obj.latitude + ' , ' + obj.longitude + '</div>' +
         '</div>' +
         '<div class="modal-footer">' +
         '<button id="save-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
@@ -89,9 +93,11 @@
         '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
         '</div>'
       );
+
       infowindow.open(currentMap, marker);
+
       currentMap.addListener('click', function(e) {
-          infowindow.close();
+        infowindow.close();
       });
     };
 
@@ -115,7 +121,6 @@
         allMarkers.push(marker);
         newBoundary.extend(marker.position);
       }
-      console.log(allMarkers);
       currentMap.fitBounds(newBoundary);
     };
 
