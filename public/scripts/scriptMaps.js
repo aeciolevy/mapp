@@ -112,30 +112,41 @@
       currentInfoWindow.close();
     });
 
-    let htmlForm = function(obj){
-      if(tagForm){
+    let htmlForm = function(obj) {
+      if (tagForm) {
         return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-        '<div class="modal-header">' +
-        '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
-        '<h3 class="modal-title">' + obj.title + '</h3>' +
-        '</div>' +
-        '<div class="modal-body">' +
-        "<p>" + obj.description + "</p>" +
-        '<div class="coordinates">  ' + obj.latitude + ' , ' + obj.longitude + '</div>' +
-        '</div>' +
-        '<div class="modal-footer">' +
-        '<button id="save-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
-        '<button id="edit-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Edit</button>' +
-        '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
-        '</div>';
+          '<div class="modal-header">' +
+          '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
+          '<h3 class="modal-title">' + obj.title + '</h3>' +
+          '</div>' +
+          '<div class="modal-body">' +
+          "<p>" + obj.description + "</p>" +
+          '<div class="coordinates">  ' + obj.latitude + ' , ' + obj.longitude + '</div>' +
+          '</div>' +
+          '<div class="modal-footer">' +
+          '<button id="save-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
+          '<button id="edit-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Edit</button>' +
+          '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
+          '</div>';
       } else {
 
-        return  '<form id="infoForm" method="POST" action="/maps/map_id/location">' +
-                '<input class="locationTitle" name="locationTitle" placeholder="Title" type="text">' +
-                '<textarea class="locationDesc" name="locationDesc" placeholder="Description Textarea"></textarea>' +
-                '<input class="locationImage" name="locationImage" placeholder="Image URL" type="text">' +
-                '<button id="save">Save</button>' +
-                '</form>';
+        return '<div id="infoBox">' +
+          '<div class="modal-header">' +
+          '<h4 class="modal-title">Edit Location</h4>' +
+          '</div>' +
+          '<form id="infoForm" method="POST" action="/maps/map_id/location">' +
+          '<div class="form-group">' +
+          '<input type="text" class="locationTitle form-control" value="' + obj.title + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+          '<textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description">' + obj.description + '</textarea>' +
+          '</div>' +
+          '<div class="form-group">' +
+          '<input type="text" class="locationImage form-control" value="Image URL">' +
+          '</div>' +
+          '<button id="save" type="submit" class="btn btn-primary btn-xs">Save</button>' +
+          '</form>' +
+          '</div>'
       }
     };
     let getLocationData = function(data, marker) {
@@ -178,7 +189,7 @@
               getLocationData(result, marker);
             });
             //Delete Marker
-            $delLocation.on('click', function(event){
+            $delLocation.on('click', function(event) {
               $.ajax({
                 method: 'POST',
                 url: `/locations/${marker.id}/delete`
@@ -186,7 +197,7 @@
               currentInfoWindow.close();
             });
             //Update Location
-            $btn.on('click', function(){
+            $btn.on('click', function() {
               alert('Hello');
             });
           });
