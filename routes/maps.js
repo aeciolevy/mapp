@@ -86,22 +86,17 @@ module.exports = (knex) => {
   });
   //Add a Map
   router.post("/", (req, res) => {
-    // res.render("maps_index");
+    knex('maps')
+    .insert({
+      title: req.body.title,
+      user_id: req.session.user_id })
+    .returning(id).then((id) => {
+      res.redirect(`/maps/${id}`);
+    });
   });
   //Delete a Map
   router.post("/delete", (req, res) => {
     // res.render("maps_index");
-  });
-  //Add Location
-  router.post("/map_id/location", (req, res) => {
-    console.log('BODYY:::', req.body);
-    res.locals.apiQuery = "&callback=initMap";
-    if (!req.body.locationTitle) {
-      res.status(400).json({
-        error: 'invalid request: no data in POST body'
-      });
-      return;
-    }
   });
 
   router.get("/:map_id", (req, res) => {
@@ -110,8 +105,6 @@ module.exports = (knex) => {
       mapId: req.params.map_id
     });
   });
-
-
   return router;
 };
 
