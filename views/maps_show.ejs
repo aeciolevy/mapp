@@ -8,14 +8,11 @@
   <style>
     /* Optional: Makes the sample page fill the window. */
 
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
+
   </style>
   <% include ./partials/_head.ejs %>
+
+
 </head>
 
 <body>
@@ -49,42 +46,24 @@
       <input id="pac-input" type="text" placeholder="Enter a location">
     </div>
   </div>
+
   <div id="map" data-mapId="<%= mapId %>"></div>
   <div id="infoBox">
-    <table>
-      <tr>
-        <td>
-          <h4>Save a location</h4>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <form id="infoForm" method="POST" action="/maps/map_id/location">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input class="locationTitle" name="locationTitle" placeholder="Title" type="text">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <textarea class="locationDesc" name="locationDesc" placeholder="Description Textarea"></textarea>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input class="locationImage" name="locationImage" placeholder="Image URL" type="text">
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <button id='save'>Save</button>
-        </td>
-      </tr>
-      </form>
-    </table>
-
+    <div class="modal-header">
+    <h3 class="modal-title">Save Location</h3>
+    </div>
+    <form id="infoForm" method="POST" action="/maps/map_id/location">
+      <div class="form-group">
+        <input type="text" class="locationTitle form-control" placeholder="Title">
+      </div>
+      <div class="form-group">
+        <textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description"></textarea>
+      </div>
+      <div class="form-group">
+        <input type="text" class="locationImage form-control" placeholder="Image URL">
+      </div>
+      <button id='save' type="submit" class="btn btn-default">Submit</button>
+    </form>
   </div>
   <div id="message">Location saved</div>
   <% include ./partials/_scripts.ejs %>

@@ -15,6 +15,7 @@
     currentInfoWindow = infowindow;
 
     google.maps.event.addListener(map, 'click', function(event) {
+      $('#infoBox').css('display', 'inline');
       let marker = new google.maps.Marker({
         position: event.latLng,
         map: map

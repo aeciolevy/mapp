@@ -34,39 +34,25 @@
   }
 
 }
+html,
+body {
+  height: 100%;
+  margin: 2.5em 0 0 0;
+  padding: 0;
 
+}
 #infoBox {
-  height: 230px;
-  width: 250px;
-  // padding: 5px;
+  display: none;
+}
 
-
+#message {
+  display: none;
 }
 
 .coordinates {
   font-size: .8em;
 }
-.locationTitle{
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 2px;
-}
 
-.locationDesc{
-  height: 80px;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 2px;
-
-}
-
-
-.locationImage{
-  width: 240px;
-  margin-bottom: 10px;
-  padding: 2px;
-
-}
 
 #save {
   float: right;
