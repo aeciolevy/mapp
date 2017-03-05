@@ -1,0 +1,61 @@
+
+html,
+body {
+  height: 100%;
+  margin: 2.5em 0 0 0;
+  padding: 0;
+
+}
+#infoBox {
+  display: none;
+}
+
+#message {
+  display: none;
+}
+
+.coordinates {
+  font-size: .8em;
+}
+
+
+#save {
+  float: right;
+}
+
+.modal-body{
+  width: 350px;
+}
+.modal-title{
+  margin-top: 10px
+}
+.modul-image{
+  height: 150px;
+  width: 350px;
+}
+
+#save-btn{
+  float: left !important;
+}
+
+#edit-btn{
+  float: left !important;
+}
+
+#description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }

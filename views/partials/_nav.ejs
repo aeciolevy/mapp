@@ -1,29 +1,55 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-      <span class="navbar-brand">
-        <a class="maps-home" href="/maps">
-        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-        mapp
-        </a>
-      </span>
-    <% if (user_id) { %>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-user"><a href="/users/<%= user_id %>">Howdy, <%= user_name %>!</a></li>
-    <ul>
-    <% } else { %>
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-options" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-    </button>
-
-  <div class="collapse navbar-collapse" id="main-nav">
+      </button>
+      <a class="navbar-brand" href="/maps"><span class="fa fa-map-marker"></span> mapp</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-options">
     <ul class="nav navbar-nav navbar-right">
+    <% if (user_id) { %>
+      <li>
+        <a href="/users/<%= user_id %>">Howdy, <%= user_name %>!</a>
+      </li>
+      <li class="navbar-map">
+        <p class="navbar-btn">
+          <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#new-map--modal"><span class="fa fa-map"></span> Create new map</a>
+        </p>
+      </li>
+    <% } else { %>
       <li><a href="#">Register</a></li>
       <li><a href="#">Login</a></li>
+    <% } %>
     </ul>
   </div>
-  <% } %>
 </div>
 </nav>
+
+<div class="modal fade" id="new-map--modal" tabindex="-1" role="dialog" aria-labelledby="new-map--modal-Label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create New Mapp</h4>
+      </div>
+      <div class="modal-body">
+        <form action"/maps" method="post" class="form-horizontal">
+          <div class="form-group">
+            <label for="new-map-title" class="col-sm-2 control-label">Mapp Title</label>
+              <div class="col-sm-10">
+                <input id="new-map-title" type="text" class="form-control" name="title">
+              </div>
+          </div>
+       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="#new-map--create">Create</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,151 +1,50 @@
+.control-favorite {
+  font-size: 2em;
+  padding: $space;
+    &:hover {
+      color: $favorite;
+    }
+    &.favorited {
+      color: darken($favorite, 20);
+      transform: scale(1.25);
+    }
+  }
+
+
+.pac-card {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  outline: none;
+  position: absolute;
+  width: 30%;
+  left: $space;
+  top: $space;
+}
+
+.pac-container {
+  background: #fff;
+  padding: $space;
+  position: absolute;
+  left: $space;
+  top: $space;
+  width: 100%;
+}
+
+.pac-input {
+  background-color: #fff;
+  padding-left: 0.25*$space 0.5*$space;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
 #map {
-  height:100%;
-}
-
-.map {
-
-  &-tab {
-
-    & &-a {
-      font-size: 1.75em;
-      padding: $space;
-    }
-
-  }
-
-  &-tabs {
-    height: auto;
-    padding-bottom: $space;
-  }
-
-  &-thumbnail {
-
-    &-name {
-      font-size: 1.75em;
-      height: 3em;
-    }
-  }
-
-  &-thumbnails {
-
-  }
-
-}
-
-#infoBox {
-  height: 230px;
-  width: 250px;
-  // padding: 5px;
-
-
-}
-
-.coordinates {
-  font-size: .8em;
-}
-.locationTitle{
+  //If you pass in $nav-height to calc(); the browser will interpret this as the string "100% - $nav-height"
+  height: -o-calc(100% - 4.5em);
+  height: -webkit-calc(100% - 4.5em);
+  height: -moz-calc(100% - 4.5em);
+  height: calc(100% - 4.5em);
+  left: 0;
+  position: absolute;
+  top: $nav-height;
   width: 100%;
-  margin-bottom: 10px;
-  padding: 2px;
 }
-
-.locationDesc{
-  height: 80px;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 2px;
-
-}
-
-
-.locationImage{
-  width: 240px;
-  margin-bottom: 10px;
-  padding: 2px;
-
-}
-
-#save {
-  float: right;
-}
-
-.modal-body{
-  width: 300px;
-}
-
-#save-btn{
-  float: left !important;
-}
-
-#edit-btn{
-  float: left !important;
-}
-
-#description {
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-      }
-
-      #infowindow-content .title {
-        font-weight: bold;
-      }
-
-      #infowindow-content {
-        display: none;
-      }
-
-      #map #infowindow-content {
-        display: inline;
-      }
-
-      .pac-card {
-        margin: 10px 10px 0 0;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        background-color: #fff;
-        font-family: Roboto;
-      }
-
-      #pac-container {
-        padding-bottom: 12px;
-        margin-right: 12px;
-      }
-
-      .pac-controls {
-        display: inline-block;
-        padding: 5px 11px;
-      }
-
-      .pac-controls label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-
-      #pac-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        margin-top:12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 400px;
-      }
-
-      #pac-input:focus {
-        border-color: #4d90fe;
-      }
-
-      #title {
-        color: #fff;
-        background-color: #4d90fe;
-        font-size: 25px;
-        font-weight: 500;
-        padding: 6px 12px;
-      }

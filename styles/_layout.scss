@@ -1,11 +1,35 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #eee;
   font-family: $font-stack;
-  padding-top: 5*$space;
+  padding-top: $nav-lineheight + 2.5*$space;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
+.navbar-brand {
+  padding: $space;
+}
+
+.navbar-fixed-top {
+  height: $nav-height;
+}
+
+//Overrule bootstrap!
+.navbar-nav li a, {
+  line-height: $nav-lineheight;
+  padding: $space;
+}
+
+.navbar-nav li a.btn, {
+  padding: 0.25*$space $space;
+  position: relative;
+  top: 0.25em;
+}
+
+.navbar-header {
+  position: relative;
 }
 
 .row {
@@ -13,8 +37,4 @@ body {
     margin: 0 auto;
     width: 75%;
   }
-}
-
-.navbar-nav .nav-user {
-  display: inline-block;
 }
