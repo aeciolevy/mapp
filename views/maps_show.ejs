@@ -27,7 +27,7 @@
       <div class="modal-header">
         <h3 class="modal-title">Save Location</h3>
       </div>
-      <form id="infoForm" method="POST" action="/maps/map_id/location">
+      <form id="infoForm" method="POST" action="/locations/<%= mapId %>">
         <div class="form-group">
           <input type="text" class="locationTitle form-control" placeholder="Title">
         </div>

@@ -97,13 +97,14 @@
           latitude: currentMarker.getPosition().lat(),
           longitude: currentMarker.getPosition().lng()
         }
-      }).then();
-
-      this.reset();
+      }).then(data => {
+        console.log(data);
+      });
       currentInfoWindow.close();
+      this.reset();
     });
 
-    let htmlForm = function(obj){
+    let htmlForm = function(obj, marker){
       if(tagForm){
         return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
         '<div class="modal-header">' +
@@ -120,12 +121,11 @@
         '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
         '</div>';
       } else {
-
-        return  '<form id="infoForm" method="POST" action="/maps/map_id/location">' +
-                '<input class="locationTitle" name="locationTitle" placeholder="Title" type="text">' +
-                '<textarea class="locationDesc" name="locationDesc" placeholder="Description Textarea"></textarea>' +
+        return  '<form id="infoFormUp" method="POST" action="/locations/' + marker.id + '/update"' + '>' +
+                '<input class="locationTitleUp" name="locationTitle" placeholder="Title" type="text" value=' + obj.title + '>' +
+                '<textarea class="locationDescUp" name="locationDesc" placeholder="Description Textarea"></textarea>' + obj.description + '</textarea>' +
                 '<input class="locationImage" name="locationImage" placeholder="Image URL" type="text">' +
-                '<button id="save">Save</button>' +
+                '<button id="saveup">Save</button>' +
                 '</form>';
       }
     };
@@ -134,7 +134,7 @@
       let infowindow = new google.maps.InfoWindow();
       console.log('Inside get location: ', tagForm);
       console.log(htmlForm);
-      infowindow.setContent(htmlForm(obj));
+      infowindow.setContent(htmlForm(obj, marker));
       currentInfoWindow = infowindow;
       infowindow.open(currentMap, marker);
       // currentMap.addListener('click', function(e) {
@@ -144,7 +144,6 @@
 
     let addMarkerCenterMap = function(data) {
       var newBoundary = new google.maps.LatLngBounds();
-
       for (let i = 0; i < data.length; i++) {
         let latLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
         let marker = new google.maps.Marker({
@@ -159,7 +158,7 @@
           $.getJSON(`/locations/${marker.id}`).then(result => {
             //Retrieve data from an existing location
             getLocationData(result, marker);
-            let $btn = $('#save');
+            let $btn = $('#infoFormUp');
             let $delLocation = $('#delete-btn');
             //Edit Location Data
             $('#edit-btn').on('click', function(event) {
@@ -177,8 +176,18 @@
               currentInfoWindow.close();
             });
             //Update Location
-            $btn.on('click', function(){
-              alert('Hello');
+            $btn.submit(function(){
+              const $title = $('.locationTitleUp');
+              const $desc = $('.locationDescUp');
+              $.ajax({
+                method: 'POST',
+                url: `/locations/${marker.id}/update`,
+                data: {
+                  title: $title,
+                  description: $description
+                }
+              }).then();
+              currentInfoWindow.close();
             });
           });
         });

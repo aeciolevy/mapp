@@ -21,13 +21,11 @@ module.exports = (knex) => {
   });
 
   router.get('/:id', (req, res) => {
-    let getOneLocation = knex('locations')
+    knex('locations')
     .select('*')
     .where({
       id: req.params.id
-    });
-    console.log(req.query);
-    getOneLocation.then(data => {
+    }).then(data => {
       res.json(data);
     });
   });
@@ -43,6 +41,7 @@ module.exports = (knex) => {
       map_id: req.params.id,
       user_id: req.session.user_id })
       .then((rows) => {
+        res.status(200).send();
       });
   });
 
@@ -51,7 +50,26 @@ module.exports = (knex) => {
     console.log(req.params.id);
     knex('locations').where({
       id: req.params.id
-    }).del().then();
+    }).del().then( () => {
+      res.status(201).send();
+    });
+  });
+
+  //Update Location
+  router.post('/:id/update', (req, res) => {
+    console.log(req.body);
+    console.log('location id:', req.params.id);
+    knex('locations')
+    .update({
+      title: req.body.title,
+      description: req.body.description || 'Description Updated'
+    })
+    .where({
+      id: req.params.id
+    }).returning('id')
+    .then(result => {
+      res.status(200).send();
+    });
   });
 
 

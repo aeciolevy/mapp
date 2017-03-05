@@ -77,6 +77,12 @@ module.exports = (knex) => {
     });
   });
 
+  router.get("/:map_id", (req, res) => {
+    res.locals.apiQuery = "&callback=initMap&libraries=places";
+    res.render("maps_show", {
+      mapId: req.params.map_id
+    });
+  });
 
   //POST METHODS
   //POST were not tested yet.
@@ -97,18 +103,6 @@ module.exports = (knex) => {
     });
   });
 
-  //Delete a Map
-  router.post("/delete", (req, res) => {
-    // res.render("maps_index");
-  });
 
-  router.get("/:map_id", (req, res) => {
-
-    res.locals.apiQuery = "&callback=initMap&libraries=places";
-    res.render("maps_show", {
-      mapId: req.params.map_id
-    });
-
-  });
   return router;
 };
