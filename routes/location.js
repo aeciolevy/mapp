@@ -37,12 +37,14 @@ module.exports = (knex) => {
     .insert({
       title: req.body.title,
       description: req.body.description,
+      image: req.body.image,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
       map_id: req.params.id,
       user_id: req.session.user_id })
-      .then((rows) => {
-        res.status(200).send();
+    .returning('id')
+      .then((id) => {
+        res.status(201).send(id);
       });
   });
 
