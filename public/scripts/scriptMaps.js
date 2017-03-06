@@ -1,4 +1,4 @@
-(function() {
+(function () {
   //Global Variables
   var currentMarker;
   var currentMap;
@@ -117,7 +117,7 @@
 
 
     let htmlForm = function(obj, marker){
-      if(tagForm){
+      if (tagForm && $('body').data('user')) {
         return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
           '<div class="modal-header">' +
           '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
@@ -131,7 +131,7 @@
           '<button id="edit-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Edit</button>' +
           '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
           '</div>';
-      } else {
+      } else if ($('body').data('user')) {
         // debugger;
         return '<div id="infoBox">' +
           '<div class="modal-header">' +
@@ -149,6 +149,16 @@
           '</div>' +
           '<button id="save-btn" type="submit" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
           '</form>' +
+          '</div>';
+      } else {
+        return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+          '<div class="modal-header">' +
+          '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
+          '<h3 class="modal-title">' + obj.title + '</h3>' +
+          '</div>' +
+          '<div class="modal-body">' +
+          "<p>" + obj.description + "</p>" +
+          '<div class="coordinates">  ' + obj.latitude + ' , ' + obj.longitude + '</div>' +
           '</div>';
       }
     };
