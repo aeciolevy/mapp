@@ -37,7 +37,7 @@
         '<textarea type="text" class="locationDesc form-control" name="desc" rows="4" placeholder="Description">' + obj.description + '</textarea>' +
         '</div>' +
         '<div class="form-group">' +
-        '<input type="text" class="locationImage form-control" placeholder="Image URL">' +
+        '<input type="text" class="locationImage form-control" placeholder="Image URL" value="' + obj.image + '">' +
         '</div>' +
         '<button id="save-btn" type="submit" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
         '</form>' +
@@ -99,8 +99,6 @@
 
   $('body').on('click', '#save-place-btn', function(event) {
     event.preventDefault();
-    console.log('DID IT WORK?!');
-    alert('no');
     let $map = $('#map');
     let $data = $map.data();
     $.ajax({
@@ -118,7 +116,6 @@
       }
     }).then(responseText => {
       currentMarker.id = responseText;
-      alert(currentMarker.id);
       currentMarker.new = false;
     });
     currentInfoWindow.close();
