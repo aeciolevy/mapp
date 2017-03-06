@@ -119,11 +119,11 @@
       currentMarker.new = false;
     });
     currentInfoWindow.close();
-    google.maps.event.addListener(markerNew, 'click', function() {
-      currentMarker = markerNew;
+
+    google.maps.event.addListener(marker, 'click', function() {
 
       if (currentMarker.new) {
-        infowindow.open(map, markerNew);
+        infowindow.open(map, marker);
         currentInfoWindow = infowindow;
       } else {
         currentInfoWindow = infowindow;
@@ -200,7 +200,9 @@
       infowindow.setContent(infowindowContent);
       var marker = new google.maps.Marker({
         map: map,
-        anchorPoint: new google.maps.Point(0, -29)
+        anchorPoint: new google.maps.Point(0, -29),
+        id: '',
+        new: false
       });
 
       infowindow.close();
@@ -236,8 +238,8 @@
       currentAddress = address;
       console.log(place.photos);
       let imageURL = place.photos[0].getUrl(({
-        'maxWidth': 250,
-        'maxHeight': 300
+        'maxWidth': 320,
+        'maxHeight': 140
       }));
 
       infowindow.setContent(
