@@ -118,12 +118,11 @@
       currentMarker.id = responseText;
       currentMarker.new = false;
       currentInfoWindow.close();
-      alert(currentMarker.id);
       currentMarker.addListener('click', () => {
         tagForm = true;
         getLocationData2();
         currentInfoWindow = infowindow;
-      })
+      });
     });
 
   });
@@ -202,7 +201,7 @@
       if (!place.geometry) {
         // User entered the name of a Place that was not suggested and
         // pressed the Enter key, or the Place Details request failed.
-        window.alert("No details available for input: '" + place.name + "'");
+        // window.alert("No details available for input: '" + place.name + "'");
         return;
       }
 
@@ -226,7 +225,6 @@
       }
 
       currentAddress = address;
-      console.log(place.photos);
       let imageURL = place.photos[0].getUrl(({
         'maxWidth':
         3
