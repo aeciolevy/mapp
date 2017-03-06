@@ -1,0 +1,22 @@
+.btn.nav-create-map-btn {
+  padding: 0.25*$space $space;
+  position: relative;
+  top: 0.25em;
+}
+
+.navbar {
+
+  &-brand {
+    padding: $space;
+  }
+
+  &-fixed-top {
+    height: $nav-height;
+  }
+
+  //Overrule bootstrap!
+  &-nav li a {
+    line-height: $nav-lineheight;
+    padding: $space;
+  }
+}

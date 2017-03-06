@@ -1,9 +1,10 @@
 @import url("https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css");
-@import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,700");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+@import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,700");
 @import 'variables';
 @import 'layout';
 @import 'map';
 @import 'map_list';
-@import 'user';
 @import 'map_modal';
+@import 'nav';
+@import 'user';

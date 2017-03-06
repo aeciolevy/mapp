@@ -8,30 +8,6 @@ body {
   padding-top: $nav-lineheight + 2.5*$space;
 }
 
-.navbar-brand {
-  padding: $space;
-}
-
-.navbar-fixed-top {
-  height: $nav-height;
-}
-
-//Overrule bootstrap!
-.navbar-nav li a, {
-  line-height: $nav-lineheight;
-  padding: $space;
-}
-
-.navbar-nav li a.btn, {
-  padding: 0.25*$space $space;
-  position: relative;
-  top: 0.25em;
-}
-
-.navbar-header {
-  position: relative;
-}
-
 .row {
   @include xs-only {
     margin: 0 auto;

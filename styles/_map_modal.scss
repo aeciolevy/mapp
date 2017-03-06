@@ -1,50 +1,37 @@
-
-// #message {
-//   display: none;
-// }
-
 .coordinates {
   font-size: .8em;
 }
 
-
 #save {
   float: right;
-}
 
-.modal-body{
-  width: 350px;
-}
-.modal-title{
-  margin-top: 10px
-}
-.modul-image{
-  height: 150px;
-  width: 350px;
-}
-
-#save-btn{
-  float: left !important;
+  &-btn {
+    float: left;
+  }
 }
 
 #edit-btn{
-  float: left !important;
+  float: left;
+}
+
+.modal-title {
+  margin-top: $space;
 }
 
 #description {
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-      }
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
 
-      #infowindow-content .title {
-        font-weight: bold;
-      }
+#infowindow-content .title {
+  font-weight: bold;
+}
 
-      #infowindow-content {
-        display: none;
-      }
+#infowindow-content {
+  display: none;
+}
 
-      #map #infowindow-content {
-        display: inline;
-      }
+#map #infowindow-content {
+  display: inline;
+}
