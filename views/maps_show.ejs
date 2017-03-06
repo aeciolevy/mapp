@@ -4,6 +4,7 @@
 <head>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="map_modal.css">
   <title>Map Title</title>
   <% include ./partials/_head.ejs %>
 
@@ -43,6 +44,11 @@
     </form>
   </div>
 
+  <div id="infowindow-content">
+      <img src="" width="16" height="16" id="place-icon">
+      <span id="place-name"  class="title"></span><br>
+      <span id="place-address"></span>
+    </div>
 
   <% include ./partials/_scripts.ejs %>
     <% include ./partials/_gmaps_api.ejs %>
