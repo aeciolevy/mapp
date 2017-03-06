@@ -23,6 +23,7 @@
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fav);
 
 
+
     var infowindow = new google.maps.InfoWindow({
       content: document.getElementById('infoBox')
     });
@@ -36,11 +37,22 @@
         map: map
       });
       google.maps.event.addListener(marker, 'click', function() {
+
         currentMarker = marker;
         currentInfoWindow = infowindow;
+
         infowindow.open(map, marker);
+        map.addListener('click', function(e) {
+          currentInfoWindow.close();
+        });
+
       });
     });
+
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+
 
     //Handle Places events Testing Do not DELETE
     // function initialize() {
@@ -76,6 +88,7 @@
 
     // google.maps.event.addDomListener(window, "load", initialize);
 
+
   };
 
   $(function() {
@@ -104,36 +117,47 @@
       this.reset();
     });
 
+
     let htmlForm = function(obj, marker){
       if(tagForm){
         return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-        '<div class="modal-header">' +
-        '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
-        '<h3 class="modal-title">' + obj.title + '</h3>' +
-        '</div>' +
-        '<div class="modal-body">' +
-        "<p>" + obj.description + "</p>" +
-        '<div class="coordinates">  ' + obj.latitude + ' , ' + obj.longitude + '</div>' +
-        '</div>' +
-        '<div class="modal-footer">' +
-        '<button id="save-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
-        '<button id="edit-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Edit</button>' +
-        '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
-        '</div>';
+          '<div class="modal-header">' +
+          '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
+          '<h3 class="modal-title">' + obj.title + '</h3>' +
+          '</div>' +
+          '<div class="modal-body">' +
+          "<p>" + obj.description + "</p>" +
+          '<div class="coordinates">  ' + obj.latitude + ' , ' + obj.longitude + '</div>' +
+          '</div>' +
+          '<div class="modal-footer">' +
+          '<button id="edit-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Edit</button>' +
+          '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
+          '</div>';
       } else {
-        return  '<form id="infoFormUp" method="POST" action="/locations/' + marker.id + '/update"' + '>' +
-                '<input class="locationTitleUp" name="locationTitle" placeholder="Title" type="text" value=' + obj.title + '>' +
-                '<textarea class="locationDescUp" name="locationDesc" placeholder="Description Textarea"></textarea>' + obj.description + '</textarea>' +
-                '<input class="locationImage" name="locationImage" placeholder="Image URL" type="text">' +
-                '<button id="saveup">Save</button>' +
-                '</form>';
+        // debugger;
+        return '<div id="infoBox">' +
+          '<div class="modal-header">' +
+          '<h4 class="modal-title">Edit Location</h4>' +
+          '</div>' +
+          '<form id="infoFormW" method="POST" action="/locations/' + marker.id + '/update"' + '>' +
+          '<div class="form-group">' +
+          '<input type="text" class="locationTitle form-control" name="title" value="' + obj.title + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+          '<textarea type="text" class="locationDesc form-control" name="desc" rows="4" placeholder="Description">' + obj.description + '</textarea>' +
+          '</div>' +
+          '<div class="form-group">' +
+          '<input type="text" class="locationImage form-control" placeholder="Image URL">' +
+          '</div>' +
+          '<button id="save-btn" type="submit" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
+          '</form>' +
+          '</div>';
       }
     };
+
     let getLocationData = function(data, marker) {
       let obj = data[0];
       let infowindow = new google.maps.InfoWindow();
-      console.log('Inside get location: ', tagForm);
-      console.log(htmlForm);
       infowindow.setContent(htmlForm(obj, marker));
       currentInfoWindow = infowindow;
       infowindow.open(currentMap, marker);
@@ -142,8 +166,23 @@
       // });
     };
 
+    $('body').on('submit', '#infoFormW', function(event) {
+      $.ajax({
+        method: 'POST',
+        url: `/locations/${marker.id}/update`,
+        data: {
+          title: req.body.title,
+          description: req.body.desc
+        }
+      }).then(() => {
+        event.preventDefault();
+      });
+      return false;
+    });
+
     let addMarkerCenterMap = function(data) {
       var newBoundary = new google.maps.LatLngBounds();
+      //TODO make foreach
       for (let i = 0; i < data.length; i++) {
         let latLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
         let marker = new google.maps.Marker({
@@ -152,14 +191,16 @@
           id: data[i].id,
           title: data.title
         });
+
+        //TODO change to event delegation rather than preexisting markers
         marker.addListener('click', function() {
           tagForm = true;
           currentMarker = marker;
           $.getJSON(`/locations/${marker.id}`).then(result => {
             //Retrieve data from an existing location
             getLocationData(result, marker);
-            let $btn = $('#infoFormUp');
             let $delLocation = $('#delete-btn');
+
             //Edit Location Data
             $('#edit-btn').on('click', function(event) {
               currentInfoWindow.close();
@@ -168,28 +209,17 @@
               getLocationData(result, marker);
             });
             //Delete Marker
-            $delLocation.on('click', function(event){
+            $delLocation.on('click', function(event) {
               $.ajax({
                 method: 'POST',
                 url: `/locations/${marker.id}/delete`
               }).then(currentMarker.setMap(null));
               currentInfoWindow.close();
             });
-            //Update Location
-            $btn.submit(function(){
-              const $title = $('.locationTitleUp');
-              const $desc = $('.locationDescUp');
-              $.ajax({
-                method: 'POST',
-                url: `/locations/${marker.id}/update`,
-                data: {
-                  title: $title,
-                  description: $description
-                }
-              }).then();
-              currentInfoWindow.close();
-            });
+            //Update Locationnp
+
           });
+
         });
         newBoundary.extend(marker.position);
       }

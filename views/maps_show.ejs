@@ -1,5 +1,6 @@
 <!DOCTYPE html >
 <html>
+
 <head>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -8,6 +9,7 @@
 
 
 </head>
+
 <body>
   <header>
     <% include ./partials/_nav.ejs %>
@@ -17,33 +19,36 @@
       <input class="pac-input" id="pac-input" type="text" placeholder="Enter a location">
     </div>
   </div>
-  <div class="control-favorite" id="control-favorite">
+  <% if (loggedIn) { %>
+  <div class="control-favorite <%= isFavorited ? ' favorited' : '' %>" id="control-favorite" data-map-id="<%= mapId %>" data-favorited=<%= isFavorited %>>
     <span class="fa fa-star"></span>
   </div>
+  <% } %>
 
   <div id="map" data-mapId="<%= mapId %>"></div>
 
-    <div id="infoBox">
-      <div class="modal-header">
-        <h3 class="modal-title">Save Location</h3>
+  <div id="infoBox">
+    <div class="modal-header">
+      <h3 class="modal-title">Save Location</h3>
+    </div>
+    <form id="infoForm" method="POST" action="/locations/<%= mapId %>">
+      <div class="form-group">
+        <input type="text" class="locationTitle form-control" placeholder="Title">
       </div>
-      <form id="infoForm" method="POST" action="/locations/<%= mapId %>">
-        <div class="form-group">
-          <input type="text" class="locationTitle form-control" placeholder="Title">
-        </div>
-          <div class="form-group">
-            <textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description"></textarea>
-          </div>
-        <div class="form-group">
-          <input type="text" class="locationImage form-control" placeholder="Image URL">
-        </div>
-       <button id='save' type="submit" class="btn btn-default">Submit</button>
-     </form>
-   </div>
+      <div class="form-group">
+        <textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description"></textarea>
+      </div>
+      <div class="form-group">
+        <input type="text" class="locationImage form-control" placeholder="Image URL">
+      </div>
+      <button id='save' type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
 
   <% include ./partials/_scripts.ejs %>
   <% include ./partials/_gmaps_api.ejs %>
   <script src="/scripts/scriptMaps.js"></script>
+  <script src="/scripts/favorite.js"></script>
 
 </body>
 

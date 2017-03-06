@@ -7,13 +7,13 @@ module.exports = (knex) => {
   //Show Location Data
   router.get('/', (req, res) => {
     let getLocations = knex('locations')
-    .select('*');
-    if (req.query.show === 'maps'){
+      .select('*');
+    if (req.query.show === 'maps') {
       getLocations = knex('locations')
-      .select('*')
-      .where({
-        map_id: req.query.mapId
-      });
+        .select('*')
+        .where({
+          map_id: req.query.mapId
+        });
     }
     getLocations.then(data => {
       res.json(data);
@@ -26,6 +26,7 @@ module.exports = (knex) => {
     .where({
       id: req.params.id
     }).then(data => {
+
       res.json(data);
     });
   });
@@ -45,7 +46,6 @@ module.exports = (knex) => {
       });
   });
 
-  //Delete Location
   router.post('/:id/delete', (req, res) => {
     console.log(req.params.id);
     knex('locations').where({
@@ -57,18 +57,16 @@ module.exports = (knex) => {
 
   //Update Location
   router.post('/:id/update', (req, res) => {
-    console.log(req.body);
-    console.log('location id:', req.params.id);
     knex('locations')
     .update({
-      title: req.body.title,
-      description: req.body.description || 'Description Updated'
+      title: req.body.title || 'Update Title',
+      description: req.body.desc || 'Description new'
     })
     .where({
       id: req.params.id
-    }).returning('id')
-    .then(result => {
-      res.status(200).send();
+    })
+    .then(() => {
+      res.status(201).send('Location updated');
     });
   });
 
