@@ -110,9 +110,7 @@
           latitude: currentMarker.getPosition().lat(),
           longitude: currentMarker.getPosition().lng()
         }
-      }).then(data => {
-        console.log(data);
-      });
+      }).then();
       currentInfoWindow.close();
       this.reset();
     });
@@ -167,17 +165,19 @@
     };
 
     $('body').on('submit', '#infoFormW', function(event) {
+      event.preventDefault();
+      const $title = $('.locationTitle').val();
+      const $desc = $('.locationDesc').val();
+      const $image = $('.locationImage').val();
       $.ajax({
         method: 'POST',
-        url: `/locations/${marker.id}/update`,
+        url: `/locations/${currentMarker.id}/update`,
         data: {
-          title: req.body.title,
-          description: req.body.desc
+          title: $title,
+          desc: $desc,
+          image: $image
         }
-      }).then(() => {
-        event.preventDefault();
-      });
-      return false;
+      }).then(currentInfoWindow.close());
     });
 
     let addMarkerCenterMap = function(data) {
