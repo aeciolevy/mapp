@@ -133,6 +133,7 @@
 
       google.maps.event.addListener(markerNew, 'click', function() {
         currentMarker = markerNew;
+        debugger;
         if (currentMarker.new){
           infowindow.open(map, markerNew);
           currentInfoWindow = infowindow;
