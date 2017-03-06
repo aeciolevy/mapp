@@ -18,6 +18,14 @@
   margin-top: $space;
 }
 
+.modal-header {
+  max-width: 20em;
+}
+
+.modal-image {
+  width:100% !important
+}
+
 #description {
   font-family: Roboto;
   font-size: 15px;

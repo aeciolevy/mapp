@@ -12,7 +12,7 @@
     if (tagForm && $('body').data('user')) {
       return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
         '<div class="modal-header">' +
-        '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
+        '<div><img src="' + obj.image + '" class="modal-image img-rounded"></div>' +
         '<h3 class="modal-title">' + obj.title + '</h3>' +
         '</div>' +
         '<div class="modal-body">' +
@@ -45,7 +45,7 @@
     } else {
       return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
         '<div class="modal-header">' +
-        '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
+        '<div><img src="' + obj.image + '" class="modal-image img-rounded"></div>' +
         '<h3 class="modal-title">' + obj.title + '</h3>' +
         '</div>' +
         '<div class="modal-body">' +
@@ -116,7 +116,27 @@
         latitude: currentMarker.getPosition().lat(),
         longitude: currentMarker.getPosition().lng()
       }
-    }).then(currentInfoWindow.close());
+    }).then(responseText => {
+      currentMarker.id = responseText;
+      alert(currentMarker.id);
+      currentMarker.new = false;
+    });
+    currentInfoWindow.close();
+    google.maps.event.addListener(markerNew, 'click', function() {
+      currentMarker = markerNew;
+
+      if (currentMarker.new) {
+        infowindow.open(map, markerNew);
+        currentInfoWindow = infowindow;
+      } else {
+        currentInfoWindow = infowindow;
+        tagForm = true;
+        getLocationData2();
+      }
+      map.addListener('click', function(e) {
+        currentInfoWindow.close();
+      });
+    });
   });
 
 
@@ -197,12 +217,12 @@
         return;
       }
 
-      // If the place has a geometry, then present it on a map.
+
       if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
       } else {
         map.setCenter(place.geometry.location);
-        map.setZoom(17); // Why 17? Because it looks good.
+        map.setZoom(17);
       }
       marker.setPosition(place.geometry.location);
       marker.setVisible(true);
@@ -236,7 +256,7 @@
         '<div class="modal-footer">' +
         '<button id="save-place-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
         '</div>'
-      )
+      );
 
       currentInfoWindow = infowindow;
       currentMarker = marker;
