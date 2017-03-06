@@ -37,7 +37,7 @@
         '<textarea type="text" class="locationDesc form-control" name="desc" rows="4" placeholder="Description">' + obj.description + '</textarea>' +
         '</div>' +
         '<div class="form-group">' +
-        '<input type="text" class="locationImage form-control" placeholder="Image URL">' +
+        '<input type="text" class="locationImage form-control" placeholder="Image URL" value="' + obj.image + '">' +
         '</div>' +
         '<button id="save-btn" type="submit" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
         '</form>' +
