@@ -1,12 +1,14 @@
-(function () {
+(function() {
   //Global Variables
   var currentMarker;
   var currentMap;
   var currentInfoWindow;
+  var currentPlace;
+  var currentAddress;
   var tagForm;
   var latestid;
   // Global Functions
-  var htmlForm = function(obj, marker){
+  var htmlForm = function(obj, marker) {
     if (tagForm && $('body').data('user')) {
       return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
         '<div class="modal-header">' +
@@ -53,47 +55,69 @@
     }
   };
 
-  var getLocationData2 = function(){
-      $.getJSON(`/locations/${currentMarker.id}`).then(data => {
-        let obj = data[0];
-        let infowindow = new google.maps.InfoWindow();
-        infowindow.setContent(htmlForm(obj, currentMarker));
-        currentInfoWindow = infowindow;
-        infowindow.open(currentMap, currentMarker);
-      });
-    };
-
-    $('body').on('click', '#edit-btn', function(event) {
-      currentInfoWindow.close();
-      event.preventDefault();
-      tagForm = false;
-      getLocationData2();
+  var getLocationData2 = function() {
+    $.getJSON(`/locations/${currentMarker.id}`).then(data => {
+      let obj = data[0];
+      let infowindow = new google.maps.InfoWindow();
+      infowindow.setContent(htmlForm(obj, currentMarker));
+      currentInfoWindow = infowindow;
+      infowindow.open(currentMap, currentMarker);
     });
+  };
 
-    // Delete Marker
-    $('body').on('click', '#delete-btn', function(event) {
-      $.ajax({
-        method: 'POST',
-        url: `/locations/${currentMarker.id}/delete`
-      }).then(currentMarker.setMap(null));
-      currentInfoWindow.close();
-    });
+  $('body').on('click', '#edit-btn', function(event) {
+    currentInfoWindow.close();
+    event.preventDefault();
+    tagForm = false;
+    getLocationData2();
+  });
 
-    $('body').on('submit', '#infoFormW', function(event) {
-      event.preventDefault();
-      const $title = $('.locationTitle').val();
-      const $desc = $('.locationDesc').val();
-      const $image = $('.locationImage').val();
-      $.ajax({
-        method: 'POST',
-        url: `/locations/${currentMarker.id}/update`,
-        data: {
-          title: $title,
-          desc: $desc,
-          image: $image
-        }
-      }).then(currentInfoWindow.close());
-    });
+  // Delete Marker
+  $('body').on('click', '#delete-btn', function(event) {
+    $.ajax({
+      method: 'POST',
+      url: `/locations/${currentMarker.id}/delete`
+    }).then(currentMarker.setMap(null));
+    currentInfoWindow.close();
+  });
+
+  $('body').on('submit', '#infoFormW', function(event) {
+    event.preventDefault();
+    const $title = $('.locationTitle').val();
+    const $desc = $('.locationDesc').val();
+    const $image = $('.locationImage').val();
+    $.ajax({
+      method: 'POST',
+      url: `/locations/${currentMarker.id}/update`,
+      data: {
+        title: $title,
+        desc: $desc,
+        image: $image
+      }
+    }).then(currentInfoWindow.close());
+  });
+
+  $('body').on('click', '#save-place-btn', function(event) {
+    event.preventDefault();
+    console.log('DID IT WORK?!');
+    alert('no');
+    let $map = $('#map');
+    let $data = $map.data();
+    $.ajax({
+      method: 'POST',
+      url: `/locations/${$data.mapid}`,
+      data: {
+        title: currentPlace.name,
+        description: currentAddress,
+        image: currentPlace.photos[0].getUrl(({
+          'maxWidth': 250,
+          'maxHeight': 300
+        })),
+        latitude: currentMarker.getPosition().lat(),
+        longitude: currentMarker.getPosition().lng()
+      }
+    }).then(currentInfoWindow.close());
+  });
 
 
   //Initialized Map
@@ -134,7 +158,7 @@
       google.maps.event.addListener(markerNew, 'click', function() {
         currentMarker = markerNew;
 
-        if (currentMarker.new){
+        if (currentMarker.new) {
           infowindow.open(map, markerNew);
           currentInfoWindow = infowindow;
         } else {
@@ -165,6 +189,7 @@
       infowindow.close();
       marker.setVisible(false);
       var place = autocomplete.getPlace();
+      currentPlace = place;
       if (!place.geometry) {
         // User entered the name of a Place that was not suggested and
         // pressed the Enter key, or the Place Details request failed.
@@ -190,8 +215,13 @@
           (place.address_components[2] && place.address_components[2].short_name || '')
         ].join(' ');
       }
+
+      currentAddress = address;
       console.log(place.photos);
-      let imageURL = place.photos[0].getUrl(({'maxWidth': 500, 'maxHeight': 500}));
+      let imageURL = place.photos[0].getUrl(({
+        'maxWidth': 250,
+        'maxHeight': 300
+      }));
 
       infowindow.setContent(
         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
@@ -204,9 +234,12 @@
         '<div class="coordinates">' + place.geometry.location.lat() + ' , ' + place.geometry.location.lat() + '</div>' +
         '</div>' +
         '<div class="modal-footer">' +
-        '<button id="save-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
+        '<button id="save-place-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
         '</div>'
       )
+
+      currentInfoWindow = infowindow;
+      currentMarker = marker;
 
       infowindow.open(map, marker);
       currentMap.addListener('place_changed', function() {
