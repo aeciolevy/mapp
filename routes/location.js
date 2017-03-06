@@ -37,6 +37,7 @@ module.exports = (knex) => {
     .insert({
       title: req.body.title,
       description: req.body.description,
+      image: req.body.image,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
       map_id: req.params.id,
@@ -63,6 +64,7 @@ module.exports = (knex) => {
     .update({
       title: req.body.title,
       description: req.body.desc,
+      image: req.body.image
     })
     .where({
       id: req.params.id
