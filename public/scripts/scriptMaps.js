@@ -42,16 +42,77 @@
         currentInfoWindow = infowindow;
 
         infowindow.open(map, marker);
-        map.addListener('click', function(e) {
-          currentInfoWindow.close();
-        });
+
 
       });
     });
 
-
+    // Autocomplete fucntions
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
+
+    autocomplete.addListener('place_changed', function() {
+
+      var infowindow = new google.maps.InfoWindow();
+      var infowindowContent = document.getElementById('infowindow-content');
+      infowindow.setContent(infowindowContent);
+      var marker = new google.maps.Marker({
+        map: map,
+        anchorPoint: new google.maps.Point(0, -29)
+      });
+
+      infowindow.close();
+      marker.setVisible(false);
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(17); // Why 17? Because it looks good.
+      }
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+      console.log(place.photos);
+      let imageURL = place.photos[0].getUrl(({'maxWidth': 500, 'maxHeight': 500}));
+
+      infowindow.setContent(
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+        '<div class="modal-header">' +
+        '<div><img src="' + imageURL + '" class="img-rounded"></div>' +
+        '<h3 class="modal-title">' + place.name + '</h3>' +
+        '</div>' +
+        '<div class="modal-body">' +
+        "<p>" + address + "</p>" +
+        '<div class="coordinates">' + place.geometry.location.lat() + ' , ' + place.geometry.location.lat() + '</div>' +
+        '</div>' +
+        '<div class="modal-footer">' +
+        '<button id="save-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
+        '</div>'
+      )
+
+      infowindow.open(map, marker);
+      currentMap.addListener('place_changed', function() {
+        currentInfoWindow.close();
+        infowindow.close();
+      });
+    });
 
 
     //Handle Places events Testing Do not DELETE
@@ -209,6 +270,11 @@
           $.getJSON(`/locations/${marker.id}`).then(result => {
             //Retrieve data from an existing location
             getLocationData(result, marker);
+
+            currentMap.addListener('click', () => {
+              currentInfoWindow.close();
+            });
+
             let $delLocation = $('#delete-btn');
 
             //Edit Location Data

@@ -9,17 +9,21 @@
 
 
 </head>
-
 <body data-user=<%= loggedIn %>>
   <header>
     <% include ./partials/_nav.ejs %>
   </header>
+  <% if (loggedIn) { %>
   <div class="pac-card" id="pac-card">
     <div class="pac-container" id="pac-container">
       <input class="pac-input" id="pac-input" type="text" placeholder="Enter a location">
     </div>
   </div>
-  <% if (loggedIn) { %>
+  <div id="infowindow-content">
+      <img src="" width="16" height="16" id="place-icon">
+      <span id="place-name"  class="title"></span><br>
+      <span id="place-address"></span>
+  </div>
   <div class="control-favorite <%= isFavorited ? ' favorited' : '' %>" id="control-favorite" data-map-id="<%= mapId %>" data-favorited=<%= isFavorited %>>
     <span class="fa fa-star"></span>
   </div>
@@ -45,11 +49,12 @@
     </form>
   </div>
 
+
+
   <% include ./partials/_scripts.ejs %>
   <% include ./partials/_gmaps_api.ejs %>
   <script src="/scripts/scriptMaps.js"></script>
   <script src="/scripts/favorite.js"></script>
 
 </body>
-
 </html>
