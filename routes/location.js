@@ -21,13 +21,12 @@ module.exports = (knex) => {
   });
 
   router.get('/:id', (req, res) => {
-    let getOneLocation = knex('locations')
-      .select('*')
-      .where({
-        id: req.params.id
-      });
-    console.log(req.query);
-    getOneLocation.then(data => {
+    knex('locations')
+    .select('*')
+    .where({
+      id: req.params.id
+    }).then(data => {
+
       res.json(data);
     });
   });
@@ -35,21 +34,42 @@ module.exports = (knex) => {
   //Insert Location Data
   router.post('/:id', (req, res) => {
     knex('locations')
-      .insert({
-        title: req.body.title,
-        description: req.body.description,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        map_id: req.params.id,
-        user_id: req.session.user_id
-      }).then((rows) => {});
+    .insert({
+      title: req.body.title,
+      description: req.body.description,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      map_id: req.params.id,
+      user_id: req.session.user_id })
+      .then((rows) => {
+        res.status(200).send();
+      });
   });
 
   router.post('/:id/delete', (req, res) => {
     console.log(req.params.id);
     knex('locations').where({
       id: req.params.id
-    }).del().then();
+    }).del().then( () => {
+      res.status(201).send();
+    });
+  });
+
+  //Update Location
+  router.post('/:id/update', (req, res) => {
+    console.log(req.body);
+    knex('locations')
+    .update({
+      title: req.body.title,
+      description: req.body.desc,
+      image: req.body.image
+    })
+    .where({
+      id: req.params.id
+    })
+    .then(() => {
+      res.status(200).send('Location updated');
+    });
   });
 
 

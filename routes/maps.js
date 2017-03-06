@@ -77,7 +77,6 @@ module.exports = (knex) => {
     });
   });
 
-
   //POST METHODS
   //POST were not tested yet.
   //Favorite a Map
@@ -116,10 +115,7 @@ module.exports = (knex) => {
     });
   });
 
-  //Delete a Map
-  router.post("/delete", (req, res) => {
-    // res.render("maps_index");
-  });
+
 
 //Get a single map
   router.get("/:map_id", (req, res) => {

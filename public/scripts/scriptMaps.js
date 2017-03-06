@@ -111,13 +111,13 @@
           longitude: currentMarker.getPosition().lng()
         }
       }).then();
-
-      this.reset();
       currentInfoWindow.close();
+      this.reset();
     });
 
-    let htmlForm = function(obj) {
-      if (tagForm) {
+
+    let htmlForm = function(obj, marker){
+      if(tagForm){
         return '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
           '<div class="modal-header">' +
           '<div><img src="http://fillmurray.com/350/150" class="modul-image img-rounded"></div>' +
@@ -128,37 +128,35 @@
           '<div class="coordinates">  ' + obj.latitude + ' , ' + obj.longitude + '</div>' +
           '</div>' +
           '<div class="modal-footer">' +
-          '<button id="save-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
           '<button id="edit-btn" type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Edit</button>' +
           '<button id="delete-btn" type="button" class="btn btn-danger btn-xs">Delete</button>' +
           '</div>';
       } else {
-
+        // debugger;
         return '<div id="infoBox">' +
           '<div class="modal-header">' +
           '<h4 class="modal-title">Edit Location</h4>' +
           '</div>' +
-          '<form id="infoForm" method="POST" action="/maps/map_id/location">' +
+          '<form id="infoFormW" method="POST" action="/locations/' + marker.id + '/update"' + '>' +
           '<div class="form-group">' +
-          '<input type="text" class="locationTitle form-control" value="' + obj.title + '">' +
+          '<input type="text" class="locationTitle form-control" name="title" value="' + obj.title + '">' +
           '</div>' +
           '<div class="form-group">' +
-          '<textarea type="text" class="locationDesc form-control" rows="4" placeholder="Description">' + obj.description + '</textarea>' +
+          '<textarea type="text" class="locationDesc form-control" name="desc" rows="4" placeholder="Description">' + obj.description + '</textarea>' +
           '</div>' +
           '<div class="form-group">' +
-          '<input type="url" class="locationImage form-control" value="Image URL">' +
+          '<input type="text" class="locationImage form-control" placeholder="Image URL">' +
           '</div>' +
-          '<button id="save" type="submit" class="btn btn-primary btn-xs">Save</button>' +
+          '<button id="save-btn" type="submit" class="btn btn-primary btn-xs" data-dismiss="modal">Save</button>' +
           '</form>' +
-          '</div>'
+          '</div>';
       }
     };
+
     let getLocationData = function(data, marker) {
       let obj = data[0];
       let infowindow = new google.maps.InfoWindow();
-      console.log('Inside get location: ', tagForm);
-      console.log(htmlForm);
-      infowindow.setContent(htmlForm(obj));
+      infowindow.setContent(htmlForm(obj, marker));
       currentInfoWindow = infowindow;
       infowindow.open(currentMap, marker);
       // currentMap.addListener('click', function(e) {
@@ -166,9 +164,25 @@
       // });
     };
 
+    $('body').on('submit', '#infoFormW', function(event) {
+      event.preventDefault();
+      const $title = $('.locationTitle').val();
+      const $desc = $('.locationDesc').val();
+      const $image = $('.locationImage').val();
+      $.ajax({
+        method: 'POST',
+        url: `/locations/${currentMarker.id}/update`,
+        data: {
+          title: $title,
+          desc: $desc,
+          image: $image
+        }
+      }).then(currentInfoWindow.close());
+    });
+
     let addMarkerCenterMap = function(data) {
       var newBoundary = new google.maps.LatLngBounds();
-
+      //TODO make foreach
       for (let i = 0; i < data.length; i++) {
         let latLng = new google.maps.LatLng(data[i].latitude, data[i].longitude);
         let marker = new google.maps.Marker({
@@ -177,14 +191,16 @@
           id: data[i].id,
           title: data.title
         });
+
+        //TODO change to event delegation rather than preexisting markers
         marker.addListener('click', function() {
           tagForm = true;
           currentMarker = marker;
           $.getJSON(`/locations/${marker.id}`).then(result => {
             //Retrieve data from an existing location
             getLocationData(result, marker);
-            let $btn = $('#save');
             let $delLocation = $('#delete-btn');
+
             //Edit Location Data
             $('#edit-btn').on('click', function(event) {
               currentInfoWindow.close();
@@ -200,10 +216,8 @@
               }).then(currentMarker.setMap(null));
               currentInfoWindow.close();
             });
-            //Update Location
-            $btn.on('click', function() {
-              alert('Hello');
-            });
+            //Update Locationnp
+
           });
 
         });
@@ -217,31 +231,3 @@
 
   });
 })();
-
-
-
-//
-//
-// $('edit-btn').on('click', function(event) {
-//   event.preventDefault();
-//   alert('works?');
-//   infowindow.setContent(
-//     '<div id="infoBox">' +
-//       '<div class="modal-header">' +
-//       '<h4 class="modal-title">Edit Location</h4>' +
-//       '</div>' +
-//       '<form id="infoForm" method="POST" action="/maps/map_id/location">' +
-//         '<div class="form-group">' +
-//           '<input type="text" class="locationTitle form-control" value="'+ obj.title + '">' +
-//         '</div>' +
-//         '<div class="form-group">' +
-//           '<textarea type="text" class="locationDesc form-control" rows="8" placeholder="Description">' + obj.description + '</textarea>' +
-//         '</div>' +
-//         '<div class="form-group">' +
-//           '<input type="text" class="locationImage form-control" value="Image URL">' +
-//         '</div>' +
-//         '<button id="save" type="submit" class="btn btn-primary btn-xs">Save</button>' +
-//       '</form>' +
-//     '</div>'
-//   );
-// });
