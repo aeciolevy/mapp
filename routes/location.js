@@ -57,16 +57,18 @@ module.exports = (knex) => {
 
   //Update Location
   router.post('/:id/update', (req, res) => {
+    console.log(req.body);
     knex('locations')
     .update({
-      title: req.body.title || 'Update Title',
-      description: req.body.desc || 'Description new'
+      title: req.body.title,
+      description: req.body.desc,
+      image: req.body.image
     })
     .where({
       id: req.params.id
     })
     .then(() => {
-      res.status(201).send('Location updated');
+      res.status(200).send('Location updated');
     });
   });
 
