@@ -41,8 +41,9 @@ module.exports = (knex) => {
       longitude: req.body.longitude,
       map_id: req.params.id,
       user_id: req.session.user_id })
-      .then((rows) => {
-        res.status(200).send();
+    .returning('id')
+      .then((id) => {
+        res.status(201).send(id);
       });
   });
 
@@ -62,7 +63,6 @@ module.exports = (knex) => {
     .update({
       title: req.body.title,
       description: req.body.desc,
-      image: req.body.image
     })
     .where({
       id: req.params.id
