@@ -119,9 +119,10 @@
       currentMarker.new = false;
       currentInfoWindow.close();
       currentMarker.addListener('click', () => {
+        // infowindow =
         tagForm = true;
         getLocationData2();
-        currentInfoWindow = infowindow;
+        // currentInfoWindow = infowindow;
       });
     });
 
@@ -226,8 +227,8 @@
 
       currentAddress = address;
       let imageURL = place.photos[0].getUrl(({
-        'maxWidth':
-        3
+        'maxWidth': 300,
+        'maxHeight': 200
       }));
 
       infowindow.setContent(
