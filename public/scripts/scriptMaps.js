@@ -99,8 +99,6 @@
 
   $('body').on('click', '#save-place-btn', function(event) {
     event.preventDefault();
-    console.log('DID IT WORK?!');
-    alert('no');
     let $map = $('#map');
     let $data = $map.data();
     $.ajax({
@@ -118,25 +116,16 @@
       }
     }).then(responseText => {
       currentMarker.id = responseText;
-      alert(currentMarker.id);
       currentMarker.new = false;
-    });
-    currentInfoWindow.close();
-    google.maps.event.addListener(markerNew, 'click', function() {
-      currentMarker = markerNew;
-
-      if (currentMarker.new) {
-        infowindow.open(map, markerNew);
-        currentInfoWindow = infowindow;
-      } else {
-        currentInfoWindow = infowindow;
+      currentInfoWindow.close();
+      alert(currentMarker.id);
+      currentMarker.addListener('click', () => {
         tagForm = true;
         getLocationData2();
-      }
-      map.addListener('click', function(e) {
-        currentInfoWindow.close();
-      });
+        currentInfoWindow = infowindow;
+      })
     });
+
   });
 
 
@@ -239,8 +228,8 @@
       currentAddress = address;
       console.log(place.photos);
       let imageURL = place.photos[0].getUrl(({
-        'maxWidth': 250,
-        'maxHeight': 300
+        'maxWidth':
+        3
       }));
 
       infowindow.setContent(
